@@ -13,7 +13,10 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: '/_nuxt/app.css' }
+      // { rel: 'stylesheet', href: '/_nuxt/app.css' }
+    ],
+    script: [
+      { src: 'https://kit.fontawesome.com/319b7cf246.js', crossorigin: 'anonymous' }
     ]
   },
   /*

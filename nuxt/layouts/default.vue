@@ -10,10 +10,10 @@
     <div class="l-contents">
       <div class="l-side">
         <ul class="l-side-menu">
-          <li><a href="">A&T</a></li>
-          <li><a href="">なんかのプロジェクト</a></li>
-          <li><a href="">横浜ビル建材</a></li>
-          <li><a href="">東洋産業</a></li>
+          <li><a href="">タスク</a></li>
+          <li><a href="">Wiki</a></li>
+          <li><a href="">チャット</a></li>
+          <li><a href="">ファイル</a></li>
         </ul>
       </div>
       <main class="l-main">
