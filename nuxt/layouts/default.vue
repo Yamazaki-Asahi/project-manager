@@ -3,8 +3,8 @@
     <header class="l-header siimple-navbar">
       <h1>Nuxt Project</h1>
       <ul class="l-header-nav siimple--float-right">
-        <li class="siimple-navbar-item"><a href="" class="siimple-navbar-item">リンク1</a></li>
-        <li class="siimple-navbar-item"><a href="" class="">リンク2</a></li>
+        <li class="siimple-navbar-item"><a href="" class="siimple-navbar-item">プロジェクトA</a></li>
+          <li class="siimple-navbar-item"><a href="" class="siimple-navbar-item">「山崎」でログイン中</a></li>
       </ul>
     </header>
     <div class="l-contents">

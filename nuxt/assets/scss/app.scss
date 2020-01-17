@@ -69,21 +69,15 @@ Layout
 
 .l-side {
   width: 220px;
-  background-color: #4e91e4;
   &-menu {
     li {
-      border-bottom: 1px solid #fff;
+      border-bottom: 1px solid #f4f4f4;
     }
     a {
       display: block;
       padding: 15px 20px;
-      color: #fff;
       font-weight: normal;
       font-size: 1.4rem;
-      &:hover {
-        background-color: #fff;
-        color: $color-main;
-      }
     }
   }
 }

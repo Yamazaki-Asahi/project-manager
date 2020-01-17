@@ -34,7 +34,7 @@
                 <input type="checkbox" id="myCheckbox2">
                 <label for="myCheckbox2"></label>
               </div>
-              <label for="myCheckbox2" class="page-tasks-search-member-name">木村 公平</label>
+              <label for="myCheckbox2" class="page-tasks-search-member-name">木村 達也</label>
             </li>
             <li>
               <div class="siimple-checkbox">
@@ -64,10 +64,11 @@
       <div class="page-tasks-search-submit">
         <input type="submit" value="この条件で検索" class="siimple-btn siimple-btn--primary">
         <input type="reset" value="検索条件をクリア" class="siimple-btn">
+          <input type="reset" value="閉じる" class="siimple-btn">
       </div>
     </div>
     <form @submit="registerNewTask">
-      <input type="text" 
+      <input type="text"
            class="g-input siimple-input siimple-input--fluid"
            v-model="newTask.name"
            placeholder="＋ 新しいタスクを追加">
@@ -84,111 +85,27 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
-  data: function() {
+  data() {
     return {
       newTask: {
         name: '',
         status: 1,
       },
-      statuses: {
-        1: {
-          slug: 'new',
-          name: '未着手',
-          color: '#fff'
-        },
-        2: {
-          slug: 'pending',
-          name: '保留',
-          color: 'rgb(255, 230, 230)'
-        },
-        3: {
-          slug: 'doing',
-          name: '作業中',
-          color: 'rgb(206, 255, 206)'
-        },
-        4: {
-          slug: 'checking',
-          name: '確認中',
-          color: 'rgb(255, 255, 177)'
-        },
-        5: {
-          slug: 'done',
-          name: '終了',
-          color: 'rgb(173, 173, 173)'
-        }
-      },
-      tasks: [
-        {
-          name: 'タスク1',
-          status: 5,
-          supplement: '補足文補足文補足文補足文補足文補足文補足文',
-          comments: [],
-          members: [],
-          order: 1,
-          children: [],
-          checked: false,
-          deadline: null
-        },
-        {
-          name: 'タスク2',
-          status: 3,
-          supplement: '補足文補足文補足文補足文補足文補足文補足文',
-          comments: [],
-          members: [],
-          order: 2,
-          children: [{}, {}, {}],
-          checked: false,
-          deadline: null
-        },
-        {
-          name: 'タスク3',
-          status: 2,
-          supplement: '補足文補足文補足文補足文補足文補足文補足文',
-          comments: [],
-          members: [],
-          order: 3,
-          children: [{}, {}, {}],
-          checked: false,
-          deadline: null
-        },
-        {
-          name: 'タスク4',
-          status: 4,
-          supplement: '補足文補足文補足文補足文補足文補足文補足文',
-          comments: [],
-          members: [],
-          order: 4,
-          children: [{}, {}],
-          checked: false,
-          deadline: null
-        },
-        {
-          name: 'タスク5',
-          status: 1,
-          supplement: '補足文補足文補足文補足文補足文補足文補足文',
-          comments: [],
-          members: [],
-          order: 5,
-          children: [],
-          checked: false,
-          deadline: null
-        },
-      ]
+    }
+  },
+  computed: {
+    tasks () {
+      return this.$store.state.tasks.list
+    },
+    statuses () {
+      return this.$store.state.statuses.list
     }
   },
   methods: {
-    registerNewTask: function(e) {
-      e.preventDefault();
-      this.tasks.push(this.newTask);
-      this.newTask = {
-        name: '',
-        status: 1,
-      };
-    },
-    switchStatus: function(index) {
-      
-    }
+
   }
 }
 </script>
