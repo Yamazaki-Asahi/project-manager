@@ -92,7 +92,6 @@ export default {
     return {
       newTask: {
         name: '',
-        status: 1,
       },
     }
   },
@@ -105,7 +104,11 @@ export default {
     }
   },
   methods: {
-
+    registerNewTask(e) {
+      e.preventDefault()
+      this.$store.commit('tasks/registerNewTask', this.newTask)
+      this.newTask.name = '';
+    }
   }
 }
 </script>
