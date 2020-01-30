@@ -67,3 +67,13 @@
         </div>
     </div>
 </template>
+
+<script>
+  export default {
+    computed: {
+      statuses () {
+        return this.$store.state.statuses.list
+      }
+    },
+  }
+</script>
