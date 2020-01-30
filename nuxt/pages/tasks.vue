@@ -70,11 +70,11 @@
     <form @submit="registerNewTask">
       <input type="text"
            class="g-input siimple-input siimple-input--fluid"
-           v-model="newTask.name"
+           v-model="newTaskName"
            placeholder="＋ 新しいタスクを追加">
     </form>
     <ul class="page-tasks-list">
-      <li class="g-task" v-for="(task, index) in tasks" :style="{ backgroundColor: statuses[task.status].color }">
+      <li class="g-task" v-for="(task) in tasks" :style="{ backgroundColor: statuses[task.status].color }">
         <div class="g-task-name">{{ task.name }}</div>
         <div class="g-task-status">{{ statuses[task.status].name }}</div>
         <div class="g-task-toggle"><i class="fas fa-chevron-down" v-if="task.children.length"></i></div>
@@ -88,14 +88,11 @@
 import { mapMutations } from 'vuex'
 
 export default {
-  data() {
-    return {
-      newTask: {
-        name: '',
-      },
-    }
-  },
   computed: {
+    newTaskName: {
+      get() { return this.$store.state.tasks.newTask.name },
+      set(v) { this.$store.commit('tasks/inputName', v) }
+    },
     tasks () {
       return this.$store.state.tasks.list
     },
@@ -106,9 +103,8 @@ export default {
   methods: {
     registerNewTask(e) {
       e.preventDefault()
-      this.$store.commit('tasks/registerNewTask', this.newTask)
-      this.newTask.name = '';
-    }
+      this.$store.commit('tasks/registerNewTask')
+    },
   }
 }
 </script>

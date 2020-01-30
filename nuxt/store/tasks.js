@@ -1,4 +1,15 @@
 export const state = () => ({
+    newTask: {
+      name: '',
+      status: 1,
+      supplement: '',
+      comments: [],
+      members: [],
+      order: 0,
+      children: [],
+      checked: false,
+      deadline: null
+    },
     list: [
       {
         name: 'タスク1',
@@ -93,28 +104,14 @@ export const state = () => ({
 )
 
 export const mutations = {
-  registerNewTask(state, payload) {
-    let defaultValue = {
-      status: 1,
-      supplement: '',
-      comments: [],
-      members: [],
-      order: state.list.length + 1,
-      children: [],
-      checked: false,
-      deadline: null
-    }
-    let newTask = Object.assign(payload, defaultValue);
-    // console.log(payload);
-    // payload.status = 1
-    // payload.supplement = ''
-    // payload.comments = []
-    // payload.members = []
-    // payload.order = state.list.length + 1
-    // payload.children = []
-    // payload.checked = false
-    // payload.deadline = null
-
-    state.list.push(newTask);
+  inputName(state, payload) {
+    state.newTask.name = payload;
+  },
+  registerNewTask(state) {
+    state.newTask.order = state.list.length + 1;
+    let obj = JSON.stringify(state.newTask);
+    obj = JSON.parse(obj);
+    state.list.push(obj);
+    state.newTask.name = '';
   }
 }
