@@ -65,6 +65,12 @@ Overwride siimple
 .siimple-input {
 	height: 44px;
 	line-height: 44px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+}
+
+.siimple-btn {
+	font-size: 1.2rem;
 }
 
 /*=============================================================
@@ -200,9 +206,9 @@ Pages
 	}
 	&-status {
 		padding-bottom: 10px;
-
 		ul {
 			display: flex;
+			flex-wrap: wrap;
 		}
 
 		li {

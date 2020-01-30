@@ -18,7 +18,7 @@ export const state = () => ({
       4: {
         slug: 'checking',
         name: '確認中',
-        color: 'rgb(255, 255, 177)'
+        color: 'rgb(221, 229, 238)'
       },
       5: {
         slug: 'done',
