@@ -1,5 +1,6 @@
 export const state = () => ({
     newTask: {
+      id: 0,
       name: '',
       status: 1,
       supplement: '',
@@ -12,6 +13,7 @@ export const state = () => ({
     },
     list: [
       {
+        id: 2,
         name: 'タスク1',
         status: 5,
         supplement: '補足文補足文補足文補足文補足文補足文補足文',
@@ -23,6 +25,7 @@ export const state = () => ({
         deadline: null
       },
       {
+        id: 3,
         name: 'タスク2',
         status: 3,
         supplement: '補足文補足文補足文補足文補足文補足文補足文',
@@ -34,6 +37,7 @@ export const state = () => ({
         deadline: null
       },
       {
+        id: 4,
         name: 'タスク3',
         status: 2,
         supplement: '補足文補足文補足文補足文補足文補足文補足文',
@@ -45,6 +49,7 @@ export const state = () => ({
         deadline: null
       },
       {
+        id: 5,
         name: 'タスク4',
         status: 4,
         supplement: '補足文補足文補足文補足文補足文補足文補足文',
@@ -56,6 +61,7 @@ export const state = () => ({
         deadline: null
       },
       {
+        id: 6,
         name: 'タスク5',
         status: 1,
         supplement: '補足文補足文補足文補足文補足文補足文補足文',
@@ -67,6 +73,7 @@ export const state = () => ({
         deadline: null
       },
       {
+        id: 7,
         name: 'タスク6',
         status: 1,
         supplement: '補足文補足文補足文補足文',
@@ -78,6 +85,7 @@ export const state = () => ({
         deadline: null
       },
       {
+        id: 8,
         name: 'タスク7',
         status: 1,
         supplement: '補足文補足文補足文補足文',
@@ -89,6 +97,7 @@ export const state = () => ({
         deadline: null
       },
       {
+        id: 9,
         name: 'タスク8',
         status: 3,
         supplement: '補足文補足文補足文補足文',
