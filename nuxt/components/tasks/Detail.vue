@@ -1,6 +1,5 @@
 <template>
   <div class="page-tasks-detail">
-    <Index />
     <div class="overlay">
       <div class="modal">
         <h1>タスク1</h1>
@@ -10,14 +9,7 @@
 </template>
 
 <script>
-  import Index from '~/pages/tasks/index'
   export default {
-    components: {
-      Index
-    },
-    validate ({ params }) {
-      // 数値でなければならない
-      return /^\d+$/.test(params.id)
-    }
+    //task単体の新たなストアを用意する
   }
 </script>

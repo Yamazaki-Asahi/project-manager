@@ -120,9 +120,11 @@ Global
 =============================================================*/
 .g-task {
   margin-bottom: 5px;
+
   &:last-child {
     margin-bottom: 0;
   }
+
   a {
     display: flex;
     justify-content: space-between;
@@ -135,6 +137,7 @@ Global
     color: #666666;
     border-radius: 4px;
   }
+
   &-name {
     flex: 5;
   }
@@ -300,6 +303,7 @@ Pages
     background: rgba(0, 0, 0, .7);
     z-index: 100
   }
+
   .modal {
     position: absolute;
     top: 50%;
