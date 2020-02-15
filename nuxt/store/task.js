@@ -1,18 +1,25 @@
+import axios from 'axios';
+
 export const state = () => ({
-	id: 2,
-	name: 'タスク1',
-	status: 5,
-	supplement: '補足文補足文補足文補足文補足文補足文補足文',
-	comments: [],
-	members: [],
-	order: 1,
-	children: [],
-	checked: false,
-	deadline: null
+	task: {
+
+	}
 });
 
 export const mutations = {
-	inputName(state, payload) {
-		state.newTask.name = payload;
+	getTask(state, payload) {
+		state.task = payload;
+	},
+};
+
+export const actions = {
+	async getTaskAction(context, payload) {
+		console.log(context, payload);
+		let data = {}
+		await axios.get('/api/tasks/'+payload.task_id)
+			.then((res) => {
+				data = res.data;
+			});
+		context.commit('getTask', data);
 	}
 };
