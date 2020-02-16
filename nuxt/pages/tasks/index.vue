@@ -24,7 +24,11 @@
 			Search,
 			Detail,
 		},
-		watchQuery: ['task_id'],
+		watch: {
+			$route(to, from) {
+
+			}
+		},
 		computed: {
 			newTaskName: {
 				get() {
@@ -36,7 +40,10 @@
 			},
 			statuses() {
 				return this.$store.state.statuses.list
-			}
+			},
+			task() {
+				return this.$store.state.task
+			},
 		},
 		methods: {
 			registerNewTask(e) {
