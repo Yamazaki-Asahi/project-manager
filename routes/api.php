@@ -15,4 +15,5 @@ use Illuminate\Http\Request;
 
 Route::name('api.')->group(function () {
 	Route::resource('/tasks', 'Api\TasksController');
+	Route::get('/statuses', 'Api\StatusesController@index');
 });

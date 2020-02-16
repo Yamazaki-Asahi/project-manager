@@ -14,8 +14,8 @@
 </template>
 
 <script>
-	import List from '~/components/tasks/List'
 	import Search from '~/components/tasks/Search'
+	import List from '~/components/tasks/List'
 	import Detail from '~/components/tasks/Detail'
 
 	export default {
@@ -50,6 +50,9 @@
 				e.preventDefault()
 				this.$store.commit('tasks/registerNewTask')
 			},
-		}
+		},
+		created() {
+			this.$store.dispatch('statuses/getStatusesAction');
+		},
 	}
 </script>

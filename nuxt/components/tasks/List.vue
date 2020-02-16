@@ -1,9 +1,9 @@
 <template>
 	<ul class="page-tasks-list">
-		<li class="g-task" v-for="(task) in tasks" :style="{ backgroundColor: statuses[task.status].color }">
+		<li class="g-task" v-for="(task) in tasks" :style="{ backgroundColor: statuses[task.status_id].color }">
 			<nuxt-link :to="getQuery(task.id)">
 				<div class="g-task-name">{{ task.name }}</div>
-				<div class="g-task-status">{{ statuses[task.status].name }}</div>
+				<div class="g-task-status">{{ statuses[task.status_id].name }}</div>
 				<div class="g-task-toggle"><i class="fas fa-chevron-down"
 											  v-if="task.children.length"></i></div>
 			</nuxt-link>
@@ -29,6 +29,9 @@
 					query: query
 				};
 			}
-		}
+		},
+		created() {
+			this.$store.dispatch('tasks/getTasksAction');
+		},
 	}
 </script>

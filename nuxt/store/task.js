@@ -18,7 +18,6 @@ export const actions = {
 			.then((res) => {
 				data = res.data;
 			});
-		console.log(data);
 		context.commit('getTask', data);
 	}
 };

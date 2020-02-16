@@ -5,12 +5,12 @@
 			<div class="page-tasks-search-status">
 				<h3>ステータス</h3>
 				<ul>
-					<li v-for="(status, key) in statuses">
+					<li v-for="(key) in Object.keys(statuses)">
 						<div class="siimple-checkbox">
-							<input type="checkbox" :id="'status' + key">
-							<label :for="'status' + key"></label>
+							<input type="checkbox" :id="'status'+key">
+							<label :for="'status'+key"></label>
 						</div>
-						<label :for="'status' + key" class="page-tasks-search-status-name">{{ status.name }}</label>
+						<label :for="'status'+key" class="page-tasks-search-status-name">{{ statuses[key].name }}</label>
 					</li>
 				</ul>
 			</div>
@@ -75,6 +75,6 @@
 			statuses() {
 				return this.$store.state.statuses.list
 			}
-		},
+		}
 	}
 </script>

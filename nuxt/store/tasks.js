@@ -1,8 +1,10 @@
+import axios from "axios";
+
 export const state = () => ({
 	newTask: {
 		id: 0,
 		name: '',
-		status: 1,
+		status_id: 1,
 		supplement: '',
 		comments: [],
 		members: [],
@@ -11,104 +13,7 @@ export const state = () => ({
 		checked: false,
 		deadline: null
 	},
-	list: [
-		{
-			id: 2,
-			name: 'タスク1',
-			status: 5,
-			supplement: '補足文補足文補足文補足文補足文補足文補足文',
-			comments: [],
-			members: [],
-			order: 1,
-			children: [],
-			checked: false,
-			deadline: null
-		},
-		{
-			id: 3,
-			name: 'タスク2',
-			status: 3,
-			supplement: '補足文補足文補足文補足文補足文補足文補足文',
-			comments: [],
-			members: [],
-			order: 2,
-			children: [{}, {}, {}],
-			checked: false,
-			deadline: null
-		},
-		{
-			id: 4,
-			name: 'タスク3',
-			status: 2,
-			supplement: '補足文補足文補足文補足文補足文補足文補足文',
-			comments: [],
-			members: [],
-			order: 3,
-			children: [{}, {}, {}],
-			checked: false,
-			deadline: null
-		},
-		{
-			id: 5,
-			name: 'タスク4',
-			status: 4,
-			supplement: '補足文補足文補足文補足文補足文補足文補足文',
-			comments: [],
-			members: [],
-			order: 4,
-			children: [{}, {}],
-			checked: false,
-			deadline: null
-		},
-		{
-			id: 6,
-			name: 'タスク5',
-			status: 1,
-			supplement: '補足文補足文補足文補足文補足文補足文補足文',
-			comments: [],
-			members: [],
-			order: 5,
-			children: [],
-			checked: false,
-			deadline: null
-		},
-		{
-			id: 7,
-			name: 'タスク6',
-			status: 1,
-			supplement: '補足文補足文補足文補足文',
-			comments: [],
-			members: [],
-			order: 6,
-			children: [],
-			checked: false,
-			deadline: null
-		},
-		{
-			id: 8,
-			name: 'タスク7',
-			status: 1,
-			supplement: '補足文補足文補足文補足文',
-			comments: [],
-			members: [],
-			order: 7,
-			children: [],
-			checked: false,
-			deadline: null
-		},
-		{
-			id: 9,
-			name: 'タスク8',
-			status: 3,
-			supplement: '補足文補足文補足文補足文',
-			comments: [],
-			members: [],
-			order: 8,
-			children: [],
-			checked: false,
-			deadline: null
-		},
-	]
+	list: []
 });
 
 export const mutations = {
@@ -121,5 +26,22 @@ export const mutations = {
 		obj = JSON.parse(obj);
 		state.list.push(obj);
 		state.newTask.name = '';
+	},
+	getTasks(state, payload) {
+		Object.keys(payload).forEach(function (index) {
+			payload[index]['children'] = [];
+			state.list.push(payload[index]);
+		});
 	}
 }
+
+export const actions = {
+	async getTasksAction(context) {
+		let data = {};
+		await axios.get('/api/tasks/')
+			.then((res) => {
+				data = res.data;
+			});
+		context.commit('getTasks', data);
+	}
+};
