@@ -48,7 +48,7 @@
 		methods: {
 			registerNewTask(e) {
 				e.preventDefault()
-				this.$store.commit('tasks/registerNewTask')
+				this.$store.dispatch('tasks/registerNewTaskAction', this.newTaskName);
 			},
 		},
 		created() {

@@ -17,4 +17,14 @@ class TasksController extends Controller
 		$task = Task::find($id);
 		return $task;
 	}
+
+	public static function store (Request $request) {
+		$tasks = Task::all();
+		$task = new Task;
+		$task->fill($request->all());
+		$task->status_id = 1;
+		$task->order = $tasks->count() + 1;
+		$task->save();
+		return $task;
+	}
 }
