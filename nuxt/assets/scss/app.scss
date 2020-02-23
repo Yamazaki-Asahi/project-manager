@@ -203,9 +203,6 @@ Pages
 		align-items: flex-start;
 		border-bottom: 1px solid #f5f5f5;
 		margin-bottom: 10px;
-		max-height: 200px;
-		overflow: scroll;
-
 		> * {
 			width: 50%;
 			margin-bottom: 10px;
@@ -301,6 +298,10 @@ Pages
 	}
 }
 
+.page-tasks-open-wrap {
+	margin-bottom: 10px;
+}
+
 .page-tasks-detail {
 	.overlay {
 		position: absolute;
@@ -349,4 +350,18 @@ Pages
 			transform: rotate(45deg);
 		}
 	}
+}
+
+/*=============================================================
+Utilities
+=============================================================*/
+
+.g-left {
+	text-align: left;
+}
+.g-center {
+	text-align: center;
+}
+.g-right {
+	text-align: right;
 }

@@ -1,6 +1,7 @@
 <template>
 	<div class="page-tasks-wrapper">
-		<Search/>
+		<Search v-if="search.show" />
+		<SearchOpenButton v-if="!search.show" />
 		<form @submit="registerNewTask">
 			<input type="text"
 				   class="g-input siimple-input siimple-input--fluid"
@@ -15,13 +16,15 @@
 
 <script>
 	import Search from '~/components/tasks/Search'
+	import SearchOpenButton from '~/components/tasks/SearchOpenButton'
 	import List from '~/components/tasks/List'
 	import Detail from '~/components/tasks/Detail'
 
 	export default {
 		components: {
-			List,
 			Search,
+			SearchOpenButton,
+			List,
 			Detail,
 		},
 		watch: {
@@ -43,6 +46,9 @@
 			},
 			task() {
 				return this.$store.state.task
+			},
+			search() {
+				return this.$store.state.search
 			},
 		},
 		methods: {

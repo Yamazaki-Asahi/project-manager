@@ -64,7 +64,7 @@
 		<div class="page-tasks-search-submit">
 			<input type="submit" value="この条件で検索" class="siimple-btn siimple-btn--primary">
 			<input type="reset" value="検索条件をクリア" class="siimple-btn">
-			<input type="reset" value="閉じる" class="siimple-btn">
+			<input type="button" value="閉じる" class="siimple-btn" @click="closeSearchBox">
 		</div>
 	</div>
 </template>
@@ -74,6 +74,11 @@
 		computed: {
 			statuses() {
 				return this.$store.state.statuses.list
+			}
+		},
+		methods: {
+			closeSearchBox() {
+				this.$store.commit('search/closeSearchBox')
 			}
 		}
 	}
