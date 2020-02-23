@@ -63,8 +63,8 @@ Overwride siimple
 }
 
 .siimple-input {
-	height: 44px;
-	line-height: 44px;
+	height: 34px;
+	line-height: 34px;
 	background-color: #fff;
 	border: 1px solid #ccc;
 }
@@ -172,6 +172,8 @@ Global
 	border: 1px solid $color-border;
 	margin-bottom: 10px;
 	padding: 0 20px;
+	height: 44px;
+	line-height: 44px;
 }
 
 /*=============================================================
