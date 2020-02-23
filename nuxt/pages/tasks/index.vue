@@ -47,9 +47,10 @@
 		},
 		methods: {
 			registerNewTask(e) {
-				e.preventDefault()
+				e.preventDefault();
 				this.$store.dispatch('tasks/registerNewTaskAction', this.newTaskName);
 			},
+
 		},
 		created() {
 			this.$store.dispatch('statuses/getStatusesAction');

@@ -31,9 +31,7 @@
 			}
 		},
 		created() {
-			this.$store.dispatch('task/getTaskAction', {
-				task_id: this.$route.query.task_id
-			});
+			this.$store.dispatch('task/getTaskAction', this.$route.query.task_id);
 		},
 		directives: {
 			ClickOutside

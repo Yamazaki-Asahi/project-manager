@@ -119,23 +119,25 @@ Layout
 Global
 =============================================================*/
 .g-task {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 40px;
+	line-height: 40px;
 	margin-bottom: 5px;
+	font-size: 1.4rem;
+	box-shadow: $shadow;
+	padding: 0 20px;
+	border-radius: 4px;
 
 	&:last-child {
 		margin-bottom: 0;
 	}
 
 	a {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 40px;
-		font-size: 1.4rem;
-		cursor: pointer;
-		box-shadow: $shadow;
-		padding: 0 20px;
+		height: 100%;
+
 		color: #666666;
-		border-radius: 4px;
 	}
 
 	&-name {
@@ -165,6 +167,10 @@ Global
 			font-size: 1rem;
 			color: $color-base;
 		}
+	}
+
+	&-archive {
+		cursor: pointer;
 	}
 }
 

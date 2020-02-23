@@ -12,12 +12,12 @@ export const mutations = {
 };
 
 export const actions = {
-	async getTaskAction(context, payload) {
-		let data = {}
-		await axios.get('/api/tasks/'+payload.task_id)
+	async getTaskAction(context, task_id) {
+		let data = {};
+		await axios.get('/api/tasks/'+task_id)
 			.then((res) => {
 				data = res.data;
 			});
 		context.commit('getTask', data);
-	}
+	},
 };

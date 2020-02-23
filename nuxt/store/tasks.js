@@ -33,7 +33,13 @@ export const mutations = {
 			state.list.push(payload[index]);
 		});
 	},
-}
+	archiveTask(state, payload) {
+		let tasks = state.list.filter(item => {
+			return item.id !== payload.id;
+		});
+		state.list = tasks;
+	}
+};
 
 export const actions = {
 	async getTasksAction(context) {
@@ -51,8 +57,15 @@ export const actions = {
 		await axios.post('/api/tasks/', params).then((res) => {
 			data = res.data;
 		}).catch(e => {
-			console.log(e.message);
+			alert(e.message);
 		});
 		context.commit('registerNewTask', data);
+	},
+	async archiveTaskAction(context, payload) {
+		await axios.delete('/api/tasks/'+payload.id)
+			.then(() => {
+
+			});
+		context.commit('archiveTask', payload);
 	}
 };

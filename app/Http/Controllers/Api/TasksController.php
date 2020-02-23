@@ -27,4 +27,10 @@ class TasksController extends Controller
 		$task->save();
 		return $task;
 	}
+
+	public static function destroy ($id) {
+		$task = Task::find($id);
+		$task->delete();
+//		return response()->json($task.name.'を削除しました。');
+	}
 }

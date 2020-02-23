@@ -22,6 +22,7 @@ class Task extends Migration
 			$table->timestamp('deadline', 0)->nullable();
 			$table->timestamps();
 			$table->foreign('status_id')->references('id')->on('statuses');
+			$table->softDeletes();
 		});
     }
 

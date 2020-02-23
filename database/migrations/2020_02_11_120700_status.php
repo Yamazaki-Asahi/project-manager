@@ -28,6 +28,6 @@ class Status extends Migration
      */
     public function down()
     {
-		Schema::dropIfExists('statues');
+		Schema::dropIfExists('statuses');
     }
 }
