@@ -9,7 +9,7 @@
 				   placeholder="＋ 新しいタスクを追加">
 		</form>
 		<List/>
-		<Detail v-if="$route.query.task_id"/>
+		<Detail v-if="task.open"/>
 	</div>
 
 </template>
@@ -26,11 +26,6 @@
 			SearchOpenButton,
 			List,
 			Detail,
-		},
-		watch: {
-			$route(to, from) {
-
-			}
 		},
 		computed: {
 			newTaskName: {
@@ -56,10 +51,10 @@
 				e.preventDefault();
 				this.$store.dispatch('tasks/registerNewTaskAction', this.newTaskName);
 			},
-
 		},
 		created() {
 			this.$store.dispatch('statuses/getStatusesAction');
+			if (this.$route.query.task_id) this.$store.dispatch('task/openTaskAction', this.$route.query.task_id);
 		},
 	}
 </script>

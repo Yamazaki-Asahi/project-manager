@@ -4,10 +4,17 @@
 			<div class="modal">
 				<span class="modal-close-btn" @click="closeModal"></span>
 				<h1>{{ task.name }}</h1>
-				<p>{{ task.supplement }}</p>
+				<div class="page-tasks-detail-member">
+					<h2>メンバー</h2>
+				</div>
+				<div class="page-tasks-detail-desc">
+					<h2>概要</h2>
+					<p>{{ task.supplement }}</p>
+				</div>
 				<div class="page-tasks-detail-comment">
 					<h2>コメント</h2>
 					<ul class="page-tasks-detail-comment-list">
+						<li v-for="comment in task.comments">{{ comment }}</li>
 					</ul>
 				</div>
 			</div>
@@ -20,7 +27,7 @@
 	export default {
 		computed: {
 			task() {
-				return this.$store.state.task
+				return this.$store.state.task;
 			}
 		},
 		methods: {
@@ -28,10 +35,8 @@
 				let query = Object.assign({}, this.$route.query);
 				delete query['task_id'];
 				this.$router.push({query: query});
+				this.$store.commit('task/closeTask');
 			}
-		},
-		created() {
-			this.$store.dispatch('task/getTaskAction', this.$route.query.task_id);
 		},
 		directives: {
 			ClickOutside
