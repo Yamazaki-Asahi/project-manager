@@ -130,29 +130,28 @@ Global
 	box-shadow: $shadow;
 	padding: 0 20px;
 	border-radius: 4px;
-
 	&:last-child {
 		margin-bottom: 0;
 	}
-
 	a {
 		height: 100%;
-
 		color: #666666;
 	}
-
 	&-name {
 		flex: 5;
 	}
-
 	&-status {
 		flex: 1;
 	}
-
+	&-archive {
+		padding: 0 5px;
+	}
 	&-toggle {
 		width: 14px;
 		position: relative;
-
+		padding: 0 5px;
+		cursor: pointer;
+		line-height: 20px;
 		&:hover:before {
 			content: '子タスクを表示';
 			display: block;
@@ -162,14 +161,13 @@ Global
 			transform: translate(-50%, -100%);
 			background-color: rgba(0, 0, 0, .8);
 			border-radius: 4px;
-			width: 80px;
+			width: 100px;
 			padding: 4px 0;
 			text-align: center;
 			font-size: 1rem;
 			color: $color-base;
 		}
 	}
-
 	&-archive {
 		cursor: pointer;
 	}

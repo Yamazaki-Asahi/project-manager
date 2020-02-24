@@ -10,4 +10,9 @@ class Task extends Model
 	use SoftDeletes;
 	protected $dates = ['deleted_at'];
     protected $fillable = ['name'];
+
+	public function childTasks()
+	{
+		return $this->hasMany('App\Task', 'parent_id', 'id');
+	}
 }

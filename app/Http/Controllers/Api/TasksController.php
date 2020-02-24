@@ -9,12 +9,16 @@ use App\Task;
 class TasksController extends Controller
 {
     public static function index () {
-    	$tasks = Task::all();
+    	$tasks = Task::where('parent_id', null)->get();
+    	foreach ($tasks as $task) {
+    		$task->children = $task->childTasks()->get();
+		}
     	return $tasks;
 	}
 
 	public static function show ($id) {
 		$task = Task::find($id);
+		$task->children = $task->childTasks()->get();
 		return $task;
 	}
 

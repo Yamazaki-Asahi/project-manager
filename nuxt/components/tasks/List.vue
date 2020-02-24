@@ -5,9 +5,9 @@
 					   @click.native="openTask(task)"
 					   class="g-task-name">{{ task.name }}</nuxt-link>
 			<div class="g-task-status">{{ statuses[task.status_id].name }}</div>
+			<div class="g-task-archive"><i class="fas fa-trash-alt" @click="archiveTask(task)"></i></div>
 			<div class="g-task-toggle"><i class="fas fa-chevron-down"
 										  v-if="task.children.length"></i></div>
-			<div class="g-task-archive"><i class="fas fa-trash-alt" @click="archiveTask(task)"></i></div>
 		</li>
 	</ul>
 </template>

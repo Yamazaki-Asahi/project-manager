@@ -11,6 +11,12 @@
 					<h2>概要</h2>
 					<p>{{ task.supplement }}</p>
 				</div>
+				<div class="page-tasks-detail-children">
+					<h2>小タスク</h2>
+					<ul>
+						<li></li>
+					</ul>
+				</div>
 				<div class="page-tasks-detail-comment">
 					<h2>コメント</h2>
 					<ul class="page-tasks-detail-comment-list">
