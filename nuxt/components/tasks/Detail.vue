@@ -1,7 +1,7 @@
 <template>
 	<div class="page-tasks-detail">
 		<div class="overlay">
-			<div class="modal">
+			<div class="modal" v-click-outside="closeModal">
 				<span class="modal-close-btn" @click="closeModal"></span>
 				<h1>{{ task.name }}</h1>
 				<div class="page-tasks-detail-member">
