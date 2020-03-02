@@ -1,0 +1,68 @@
+.g-task {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 40px;
+	line-height: 40px;
+	margin-bottom: 5px;
+	font-size: 1.4rem;
+	box-shadow: $shadow;
+	padding: 0 20px;
+	border-radius: 4px;
+	&:last-child {
+		margin-bottom: 0;
+	}
+	a {
+		height: 100%;
+		color: #666666;
+	}
+	&-name {
+		flex: 5;
+	}
+	&-status {
+		flex: 1;
+	}
+	&-archive {
+		padding: 0 5px;
+	}
+	&-toggle {
+		width: 14px;
+		position: relative;
+		padding: 0 5px;
+		cursor: pointer;
+		line-height: 20px;
+		&:hover:before {
+			content: '子タスクを表示';
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 50%;
+			transform: translate(-50%, -100%);
+			background-color: rgba(0, 0, 0, .8);
+			border-radius: 4px;
+			width: 100px;
+			padding: 4px 0;
+			text-align: center;
+			font-size: 1rem;
+			color: $color-base;
+		}
+	}
+	&-archive {
+		cursor: pointer;
+	}
+}
+
+.g-box {
+	box-shadow: $shadow;
+	background-color: $color-base;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.g-input {
+	border: 1px solid $color-border;
+	margin-bottom: 10px;
+	padding: 0 20px;
+	height: 44px;
+	line-height: 44px;
+}

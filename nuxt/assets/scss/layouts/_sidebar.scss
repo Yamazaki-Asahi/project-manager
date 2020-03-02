@@ -1,0 +1,16 @@
+.l-side {
+	width: 220px;
+
+	&-menu {
+		li {
+			border-bottom: 1px solid #f4f4f4;
+		}
+
+		a {
+			display: block;
+			padding: 15px 20px;
+			font-weight: normal;
+			font-size: 1.4rem;
+		}
+	}
+}
