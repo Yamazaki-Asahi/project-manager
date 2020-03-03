@@ -30,7 +30,7 @@ class StatusesTableSeeder extends Seeder
             'id' => 3,
             'name' => '作業中',
             'slug' => 'doing',
-            'color' => 'rgb(206, 255, 206)',
+            'color' => 'rgb(255, 253, 223)',
         ]);
 
         DB::table('statuses')->insert([
