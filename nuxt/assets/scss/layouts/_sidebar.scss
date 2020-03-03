@@ -1,6 +1,9 @@
 .l-side {
 	width: 220px;
-	background-color: $color-sub;
+	//background-color: $color-sub;
+	li {
+		border-bottom: 1px solid $color-sub;
+	}
 	&-menu {
 		a {
 			display: block;
