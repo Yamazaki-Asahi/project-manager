@@ -10,10 +10,10 @@
 		<div class="l-contents">
 			<div class="l-side">
 				<ul class="l-side-menu">
-					<li><a href="">タスク</a></li>
-					<li><a href="">Wiki</a></li>
-					<li><a href="">チャット</a></li>
-					<li><a href="">ファイル</a></li>
+					<li><a href="/tasks">タスク</a></li>
+					<li><a href="/wiki">Wiki</a></li>
+					<li><a href="/chat">チャット</a></li>
+					<li><a href="/files">ファイル</a></li>
 				</ul>
 			</div>
 			<main class="l-main">
@@ -23,5 +23,3 @@
 	</div>
 </template>
 
-<style>
-</style>
