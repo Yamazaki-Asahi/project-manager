@@ -46,10 +46,9 @@
 					password: this.password,
 				};
 				axios.post('/api/auth/login', params).then((res) => {
-					this.$router.push('/tasks');
-					console.log(res.data);
-				}).catch(e => {
-					alert(e.message);
+                    localStorage.setItem('access_token', res.data.access_token);
+                    this.$router.push('/tasks');
+                }).catch(e => {
 					this.message = 'ログイン情報が間違っています。'
 				});
 			}
