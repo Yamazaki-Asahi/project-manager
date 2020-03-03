@@ -1,16 +1,16 @@
 <template>
-	<div class="page-tasks-wrapper">
-		<Search v-if="search.show" />
-		<SearchOpenButton v-if="!search.show" />
-		<form @submit="registerNewTask">
-			<input type="text"
-				   class="g-input siimple-input siimple-input--fluid"
-				   v-model="newTaskName"
-				   placeholder="＋ 新しいタスクを追加">
-		</form>
-		<List/>
-		<Detail v-if="task.open"/>
-	</div>
+    <div class="page-tasks-wrapper">
+        <Search v-if="search.show"/>
+        <SearchOpenButton v-if="!search.show"/>
+        <form @submit="registerNewTask">
+            <input type="text"
+                   class="g-input siimple-input siimple-input--fluid"
+                   v-model="newTaskName"
+                   placeholder="＋ 新しいタスクを追加">
+        </form>
+        <List/>
+        <Detail v-if="task.open"/>
+    </div>
 
 </template>
 
@@ -27,6 +27,7 @@
 			List,
 			Detail,
 		},
+		middleware: 'authenticated',
 		computed: {
 			newTaskName: {
 				get() {

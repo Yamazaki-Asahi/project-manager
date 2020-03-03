@@ -40,17 +40,11 @@
 		methods: {
 			login(e) {
 				e.preventDefault();
-				console.log(this.email, this.password);
-				let params = {
-					email: this.email,
-					password: this.password,
-				};
-				axios.post('/api/auth/login', params).then((res) => {
-                    localStorage.setItem('access_token', res.data.access_token);
-                    this.$router.push('/tasks');
-                }).catch(e => {
-					this.message = 'ログイン情報が間違っています。'
-				});
+                let params = {
+                    email: this.email,
+                    password: this.password,
+                };
+                this.$store.commit('user/login', params);
 			}
 		}
 	}

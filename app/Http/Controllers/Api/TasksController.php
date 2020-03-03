@@ -8,6 +8,11 @@ use App\Task;
 
 class TasksController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public static function index () {
     	$tasks = Task::where('parent_id', null)->get();
     	foreach ($tasks as $task) {
