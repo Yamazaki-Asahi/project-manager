@@ -33,9 +33,11 @@
 		position: relative;
 		padding: 0 5px;
 		line-height: 20px;
-		color: $color-disabled;
 		&.active {
 			cursor: pointer;
+		}
+		i {
+			color: $color-disabled;
 		}
 		&.active i {
 			color: $color-text;
