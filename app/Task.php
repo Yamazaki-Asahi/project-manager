@@ -11,6 +11,10 @@ class Task extends Model
 	protected $dates = ['deleted_at'];
     protected $fillable = ['name'];
 
+    public function project()
+	{
+		return $this->belongsTo('App\Project');
+	}
 	public function childTasks()
 	{
 		return $this->hasMany('App\Task', 'parent_id', 'id');
