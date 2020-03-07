@@ -41,7 +41,7 @@
 			}
 		},
 		created() {
-			this.$store.dispatch('tasks/getTasksAction');
+			this.$store.dispatch('tasks/getTasksAction', this.$route.params.id);
 		},
 	}
 </script>

@@ -41,9 +41,12 @@ export const mutations = {
 };
 
 export const actions = {
-  async getTasksAction(context) {
+  async getTasksAction(context, project_id) {
     let data = {};
-    await axios.get('/api/tasks/')
+    let params = {
+      project_id: project_id
+    };
+    await axios.get('/api/tasks/', { params: params })
       .then((res) => {
         data = res.data;
       }).catch(e => {
