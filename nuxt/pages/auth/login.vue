@@ -27,6 +27,8 @@
 </template>
 
 <script>
+	import axios from "axios";
+
 	export default {
 		data: () => {
 			return {
@@ -43,7 +45,13 @@
                     email: this.email,
                     password: this.password,
                 };
-                this.$store.commit('user/login', params);
+				axios.post('/api/auth/login', params).then((res) => {
+					localStorage.setItem('access_token', res.data.access_token);
+					axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
+					this.$router.push('/projects');
+				}).catch(e => {
+					this.message = 'ログイン情報が間違っています。'
+				});
 			}
 		}
 	}
