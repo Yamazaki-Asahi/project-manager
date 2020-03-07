@@ -10,3 +10,9 @@ Utilities
 .g-right {
 	text-align: right;
 }
+
+.g-inner {
+	width: calc(100vw - 40px);
+	max-width: 1000px;
+	margin: 0 auto;
+}

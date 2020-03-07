@@ -1,15 +1,13 @@
 .l-side {
 	width: 220px;
-	//background-color: $color-sub;
-	li {
-		border-bottom: 1px solid $color-sub;
-	}
+	background-color: #23282d;
 	&-menu {
 		a {
 			display: block;
 			padding: 15px 20px;
 			font-weight: normal;
 			font-size: 1.4rem;
+			color: $color-base;
 			&:hover {
 				background-color: $color-main;
 				color: $color-base;

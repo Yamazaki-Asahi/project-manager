@@ -1,12 +1,6 @@
 <template>
 	<div>
-		<header class="l-header siimple-navbar">
-			<h1>Nuxt Project</h1>
-			<ul class="l-header-nav siimple--float-right">
-				<li class="siimple-navbar-item"><a href="" class="siimple-navbar-item">プロジェクトA</a></li>
-				<li class="siimple-navbar-item"><a href="" class="siimple-navbar-item">「山崎」でログイン中</a></li>
-			</ul>
-		</header>
+		<Header/>
 		<div class="l-contents">
 			<div class="l-side">
 				<ul class="l-side-menu">
@@ -22,4 +16,13 @@
 		</div>
 	</div>
 </template>
+
+<script>
+	import Header from '~/components/layouts/Header'
+	export default {
+		components: {
+			Header,
+		}
+	}
+</script>
 

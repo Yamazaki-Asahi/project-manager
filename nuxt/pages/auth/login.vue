@@ -35,6 +35,7 @@
 				password: '',
 			}
 		},
+		layout: 'no_login',
 		methods: {
 			login(e) {
 				e.preventDefault();

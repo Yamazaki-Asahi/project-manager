@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const state = () => ({
-	authenticated: false
+
 });
 
 export const mutations = {
@@ -14,17 +14,21 @@ export const mutations = {
 			this.message = 'ログイン情報が間違っています。'
 		});
 	},
-	checkIfAuthenticated(state, isSuccess) {
-		state.authenticated = isSuccess;
-	}
+	getUser(state, user) {
+		if (user) {
+			Object.keys(user).map((key) => {
+				state[key] = user[key];
+			});
+		}
+	},
 };
 
 export const actions = {
-	async checkIfAuthenticatedAction(context) {
-		await axios.post('/api/auth/me').then(() => {
-			context.commit('checkIfAuthenticated', true);
+	async getUserAction(context) {
+		await axios.post('/api/auth/me').then(res => {
+			context.commit('getUser', res.data);
 		}).catch(e => {
-			context.commit('checkIfAuthenticated', false);
+			context.commit('checkIfAuthenticated', null);
 		});
 	}
 };
