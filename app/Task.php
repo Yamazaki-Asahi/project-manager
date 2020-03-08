@@ -9,7 +9,7 @@ class Task extends Model
 {
 	use SoftDeletes;
 	protected $dates = ['deleted_at'];
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'project_id', 'task_id'];
 
     public function project()
 	{
@@ -18,5 +18,9 @@ class Task extends Model
 	public function childTasks()
 	{
 		return $this->hasMany('App\Task', 'parent_id', 'id');
+	}
+	public function parent_task()
+	{
+		return $this->belongsTo('App\Task', 'parent_id', 'id');
 	}
 }

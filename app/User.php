@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -24,7 +25,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function projects()
 	{
-		return $this->belongsToMany('App\projects');
+		return $this->belongsToMany('App\Project', 'user_project', 'user_id', 'project_id');
 	}
 
 	public function getJWTIdentifier()

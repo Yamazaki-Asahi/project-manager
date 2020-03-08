@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Task;
+use App\Project;
 
 class TasksController extends Controller
 {
@@ -13,8 +14,12 @@ class TasksController extends Controller
         $this->middleware('auth:api');
     }
 
-    public static function index () {
-    	$tasks = Task::where('parent_id', null)->get();
+    public static function index (Request $request) {
+    	$tasks = Project::where('id', $request->input('project_id'))
+			->first()
+			->tasks()
+			->where('parent_id', null)
+			->get();
     	foreach ($tasks as $task) {
     		$task->children = $task->childTasks()->get();
 		}
@@ -28,11 +33,18 @@ class TasksController extends Controller
 	}
 
 	public static function store (Request $request) {
-		$tasks = Task::all();
 		$task = new Task;
 		$task->fill($request->all());
 		$task->status_id = 1;
-		$task->order = $tasks->count() + 1;
+		if ($task->parent_id) {
+			$task->order = Task::where('parent_id', $task->parent_id)
+					->get()
+					->count() + 1;
+		} else {
+			$task->order = Task::doesntHave('parent_task')
+					->get()
+					->count() + 1;
+		}
 		$task->save();
 		return $task;
 	}
@@ -40,6 +52,5 @@ class TasksController extends Controller
 	public static function destroy ($id) {
 		$task = Task::find($id);
 		$task->delete();
-//		return response()->json($task.name.'を削除しました。');
 	}
 }

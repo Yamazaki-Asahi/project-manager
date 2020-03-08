@@ -21,5 +21,6 @@ Route::name('api.')->group(function () {
 		Route::post('me', 'Api\AuthController@me');
 	});
 	Route::resource('/tasks', 'Api\TasksController');
+	Route::resource('/projects', 'Api\ProjectsController');
 	Route::get('/statuses', 'Api\StatusesController@index');
 });
