@@ -25,6 +25,6 @@
 		components: {
 			Header,
 		}
-	}git
+	}
 </script>
 

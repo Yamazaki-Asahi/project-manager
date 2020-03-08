@@ -12,9 +12,10 @@
 					<p>{{ task.supplement }}</p>
 				</div>
 				<div class="page-tasks-detail-children">
-					<h2>小タスク</h2>
-					<ul>
-						<li></li>
+					<h2>子タスク</h2>
+					<ul class="siimple-list">
+						<li v-for="child in task.children"
+							class="g-task"><a href="">{{ child.name }}</a></li>
 					</ul>
 				</div>
 				<div class="page-tasks-detail-comment">

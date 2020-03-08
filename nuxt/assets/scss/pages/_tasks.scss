@@ -107,6 +107,10 @@
 }
 
 .page-tasks-detail {
+	h2 {
+		margin-bottom: 5px;
+	}
+
 	.overlay {
 		position: absolute;
 		top: 0;
@@ -165,8 +169,11 @@
 			min-height: 60px;
 		}
 	}
+	&-children {
+		margin-top: 20px;
+	}
 	&-comment {
-		margin-top: 10px;
+		margin-top: 20px;
 	}
 }
 

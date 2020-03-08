@@ -58,6 +58,7 @@ export const actions = {
     let params = new URLSearchParams();
     params.append('name', payload.name);
     params.append('project_id', payload.project_id);
+    params.append('parent_id', payload.parent_id);
     await axios.post('/api/tasks/', params).then((res) => {
       data = res.data;
     }).catch(e => {
