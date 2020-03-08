@@ -50,7 +50,11 @@
 		methods: {
 			registerNewTask(e) {
 				e.preventDefault();
-				this.$store.dispatch('tasks/registerNewTaskAction', this.newTaskName);
+				let params = {
+				    name: this.newTaskName,
+                    project_id: this.$route.params.id,
+                };
+				this.$store.dispatch('tasks/registerNewTaskAction', params);
 			},
 		},
 		created() {

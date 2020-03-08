@@ -22,7 +22,6 @@ export const mutations = {
   },
   registerNewTask(state, payload) {
     let obj = payload;
-    console.log(obj);
     obj['children'] = [];
     state.list.push(obj);
     state.newTask.name = '';
@@ -57,7 +56,8 @@ export const actions = {
   async registerNewTaskAction(context, payload) {
     let data = {};
     let params = new URLSearchParams();
-    params.append('name', payload);
+    params.append('name', payload.name);
+    params.append('project_id', payload.project_id);
     await axios.post('/api/tasks/', params).then((res) => {
       data = res.data;
     }).catch(e => {
