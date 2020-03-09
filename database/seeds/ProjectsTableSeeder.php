@@ -16,5 +16,10 @@ class ProjectsTableSeeder extends Seeder
             'id' => 1,
             'name' => 'プロジェクト管理ツール',
         ]);
+
+		DB::table('projects')->insert([
+			'id' => 2,
+			'name' => 'プロジェクトB',
+		]);
     }
 }

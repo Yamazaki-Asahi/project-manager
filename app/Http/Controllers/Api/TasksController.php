@@ -15,7 +15,9 @@ class TasksController extends Controller
     }
 
     public static function index (Request $request) {
-    	$tasks = Project::where('id', $request->input('project_id'))
+		$project = Project::find($request->input('project_id'));
+		$project->isJoinedProject(); // 現在ログインしているユーザーがプロジェクトに参加しているか
+    	$tasks = Project::where('id', $project->id)
 			->first()
 			->tasks()
 			->where('parent_id', null)
@@ -28,13 +30,17 @@ class TasksController extends Controller
 
 	public static function show ($id) {
 		$task = Task::find($id);
+		$project = $task->project;
+		$project->isJoinedProject();
 		$task->children = $task->childTasks()->get();
 		return $task;
 	}
 
 	public static function store (Request $request) {
 		$task = new Task;
-		$task->fill($request->all());
+		if ($task->project->isJoinedProject()) { // 現在ログインしているユーザーがプロジェクトに参加しているか
+			$task->fill($request->all());
+		}
 		$task->status_id = 1;
 		if ($task->parent_id) {
 			$task->order = Task::where('parent_id', $task->parent_id)
@@ -51,6 +57,8 @@ class TasksController extends Controller
 
 	public static function destroy ($id) {
 		$task = Task::find($id);
-		$task->delete();
+		if ($task->project->isJoinedProject()) {
+			$task->delete();
+		}
 	}
 }

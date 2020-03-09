@@ -2,7 +2,7 @@
 	<header class="l-header siimple-navbar">
 		<h1>Nuxt Project</h1>
 		<ul class="l-header-nav siimple--float-right">
-			<li class="siimple-navbar-item"><a href="" class="siimple-navbar-item">プロジェクトA</a></li>
+			<li class="siimple-navbar-item"><a href="" class="siimple-navbar-item"><b>プロジェクトA</b></a></li>
 			<li class="siimple-navbar-item">
 				<a href="" class="siimple-navbar-item">{{ user.name }}</a>
 <!--				<ul class="siimple-menu-submenu">-->

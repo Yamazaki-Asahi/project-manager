@@ -70,5 +70,13 @@ class TasksTableSeeder extends Seeder
             'order' => 3,
             'name' => 'タスク一覧の作成',
         ]);
+
+		DB::table('tasks')->insert([
+			'id' => 8,
+			'project_id' => 2,
+			'status_id' => 1,
+			'order' => 1,
+			'name' => 'ProjectBのタスク',
+		]);
     }
 }

@@ -15,10 +15,12 @@ class Task extends Model
 	{
 		return $this->belongsTo('App\Project');
 	}
+
 	public function childTasks()
 	{
 		return $this->hasMany('App\Task', 'parent_id', 'id');
 	}
+
 	public function parent_task()
 	{
 		return $this->belongsTo('App\Task', 'parent_id', 'id');

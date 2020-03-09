@@ -48,10 +48,10 @@ export const actions = {
     await axios.get('/api/tasks/', { params: params })
       .then((res) => {
         data = res.data;
+        context.commit('getTasks', data);
       }).catch(e => {
-        alert(e);
+        context.commit('error/setError', e.response, { root: true });
       });
-    context.commit('getTasks', data);
   },
   async registerNewTaskAction(context, payload) {
     let data = {};
@@ -62,7 +62,7 @@ export const actions = {
     await axios.post('/api/tasks/', params).then((res) => {
       data = res.data;
     }).catch(e => {
-      alert(e.message);
+
     });
     context.commit('registerNewTask', data);
   },
