@@ -1,26 +1,37 @@
 .g-task {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 40px;
-	line-height: 40px;
-	margin-bottom: 5px;
-	font-size: 1.4rem;
-	box-shadow: $shadow;
-	padding: 0 20px;
-	border-radius: 4px;
-	&:last-child {
-		margin-bottom: 0;
+	margin-top: 5px;
+	&:first-child {
+		margin-top: 0;
+	}
+	&-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 40px;
+		line-height: 40px;
+		font-size: 1.4rem;
+		box-shadow: $shadow;
+		padding: 0 20px;
+		border-radius: 4px;
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 	a {
 		height: 100%;
 		color: #666666;
 	}
+	&-children {
+		margin-top: 5px;
+	}
+	&-arrow {
+		padding: 0 10px 0 0;
+	}
 	&-name {
-		flex: 5;
+		flex: 1;
 	}
 	&-status {
-		flex: 1;
+		padding: 0 40px 0 20px;
 	}
 	&-archive {
 		padding: 0 5px;
@@ -41,6 +52,9 @@
 		}
 		&.active i {
 			color: $color-text;
+		}
+		&.rotate i {
+			transform: rotate(-180deg);
 		}
 		&.active:hover:before {
 			content: '子タスクを表示';

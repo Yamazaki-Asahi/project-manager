@@ -28,6 +28,7 @@ export const mutations = {
   },
   getTasks(state, payload) {
     Object.keys(payload).forEach(function (index) {
+      payload[index]['showChildren'] = false;
       state.list.push(payload[index]);
     });
   },
@@ -36,6 +37,19 @@ export const mutations = {
       return item.id !== payload.id;
     });
     state.list = tasks;
+  },
+  toggleChildren(state, payload) {
+    state.list.forEach(function (item, i) {
+      if (item.id === payload.task.id) {
+        if (payload.type === 'open') {
+          state.list[i].children = payload.children;
+          state.list[i].showChildren = true;
+        } else {
+          state.list[i].children = [];
+          state.list[i].showChildren = false;
+        }
+      }
+    });
   }
 };
 
@@ -72,5 +86,21 @@ export const actions = {
 
       });
     context.commit('archiveTask', payload);
+  },
+  async toggleChildrenAction(context, task) {
+    if (task.showChildren) {
+      context.commit('toggleChildren', {task: task, type: 'close'})
+      return;
+    };
+    let params = {
+      project_id: task.project_id,
+      parent_id: task.id,
+    };
+    let children = [];
+    await axios.get('/api/tasks/', {params: params})
+        .then((res) => {
+          children = res.data;
+        });
+    context.commit('toggleChildren', {task: task, type: 'open', children: children});
   }
 };
