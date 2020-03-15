@@ -16,14 +16,19 @@ class TasksController extends Controller
 
     public static function index (Request $request) {
 		$project = Project::find($request->input('project_id'));
+		$parent_id = $request->input('parent_id') ? $request->input('parent_id') : null;
 		$project->isJoinedProject(); // 現在ログインしているユーザーがプロジェクトに参加しているか
     	$tasks = Project::where('id', $project->id)
 			->first()
 			->tasks()
-			->where('parent_id', null)
+			->where('parent_id', $parent_id)
 			->get();
     	foreach ($tasks as $task) {
-    		$task->children = $task->childTasks()->get();
+    		if ($task->childTasks()->get()->count() > 0) {
+    			$task->hasChildren = true;
+			} else {
+				$task->hasChildren = false;
+			}
 		}
     	return $tasks;
 	}

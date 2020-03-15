@@ -1,5 +1,5 @@
 <template>
-	<ul class="page-tasks-list">
+	<ul class="page-tasks-list" :class="{'g-task-children': children}">
 		<li class="g-task" v-for="(task) in tasks">
 			<div class="g-task-item" :style="{ backgroundColor: statuses[task.status_id].color }">
 				<nuxt-link :to="getQuery(task.id)"
@@ -13,39 +13,33 @@
 					<i class="fas fa-chevron-down"></i>
 				</div>
 			</div>
-			<ul v-if="task.showChildren" class="g-task-children">
-				<li class="g-task" v-for="(child) in task.children">
-					<div class="g-task-item" :style="{ backgroundColor: statuses[child.status_id].color }">
-						<div class="g-task-arrow">
-							<i class="fas fa-long-arrow-alt-right"></i>
-						</div>
-						<nuxt-link :to="getQuery(child.id)"
-								   @click.native="openTask(task)"
-								   class="g-task-name">{{ child.name }}</nuxt-link>
-						<div class="g-task-status">{{ statuses[child.status_id].name }}</div>
-						<div class="g-task-archive"><i class="fas fa-trash-alt" @click="archiveTask(task)"></i></div>
-						<div class="g-task-toggle"
-							 :class="{ active: child.hasChildren, rotate: child.showChilren }"
-							 @click="toggleChildren(child)">
-							<i class="fas fa-chevron-down"></i>
-						</div>
-					</div>
-				</li>
-			</ul>
+			<List :children="task.children"
+				  v-if="task.showChildren" />
 		</li>
 	</ul>
 </template>
 
 <script>
+	import List from "./List";
+
 	export default {
+		name: 'List',
 		computed: {
 			tasks() {
-				return this.$store.state.tasks.list
+				if (this.$props.children) {
+					return this.$props.children;
+				} else {
+					return this.$store.state.tasks.list
+				}
 			},
 			statuses() {
 				return this.$store.state.statuses.list
 			}
 		},
+		components: {
+			List
+		},
+		props: ['children'],
 		methods: {
 			getQuery(task_id) {
 				let query = Object.assign({task_id : task_id}, this.$route.query);
@@ -67,7 +61,9 @@
 			}
 		},
 		created() {
-			this.$store.dispatch('tasks/getTasksAction', this.$route.params.id);
+			if (!this.$props.children) {
+				this.$store.dispatch('tasks/getTasksAction', this.$route.params.id);
+			}
 		},
 	}
 </script>

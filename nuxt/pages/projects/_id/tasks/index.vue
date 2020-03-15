@@ -8,7 +8,7 @@
                    v-model="newTaskName"
                    placeholder="＋ 新しいタスクを追加">
         </form>
-        <List/>
+        <List children="" />
         <Detail v-if="task.open"/>
     </div>
 

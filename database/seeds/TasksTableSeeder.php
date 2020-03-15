@@ -31,7 +31,7 @@ class TasksTableSeeder extends Seeder
         DB::table('tasks')->insert([
             'id' => 3,
             'project_id' => 1,
-            'status_id' => 2,
+            'status_id' => 3,
             'parent_id' => 2,
             'order' => 1,
             'name' => 'コメント機能の作成',
