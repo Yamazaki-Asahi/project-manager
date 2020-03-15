@@ -23,13 +23,14 @@ export const mutations = {
   registerNewTask(state, payload) {
     let obj = payload;
     obj['children'] = [];
+    obj['newChild'] = false;
     state.list.push(obj);
     state.newTask.name = '';
   },
   getTasks(state, payload) {
     Object.keys(payload).forEach(function (index) {
       payload[index]['showChildren'] = false;
-      console.log(payload);
+      payload[index]['newChild'] = false;
       state.list.push(payload[index]);
     });
   },
@@ -44,11 +45,21 @@ export const mutations = {
       if (item.id === payload.task.id) {
         if (payload.type === 'open') {
           state.list[i].children = payload.children;
+          state.list[i].children.forEach(function (child) {
+            child.newChild = false;
+          });
           state.list[i].showChildren = true;
         } else {
           state.list[i].children = [];
           state.list[i].showChildren = false;
         }
+      }
+    });
+  },
+  createNewChild(state, parent) {
+    state.list.forEach(function (item, i) {
+      if (item.id === parent.id) {
+        state.list[i].newChild = '';
       }
     });
   }

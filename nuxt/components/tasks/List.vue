@@ -6,13 +6,18 @@
 						   @click.native="openTask(task)"
 						   class="g-task-name">{{ task.name }}</nuxt-link>
 				<div class="g-task-status">{{ statuses[task.status_id].name }}</div>
-				<div class="g-task-archive"><i class="fas fa-trash-alt" @click="archiveTask(task)"></i></div>
+				<div class="g-task-add" @click="createNewChild(task)"><i class="fas fa-plus-circle"></i></div>
+				<div class="g-task-archive" @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
 				<div class="g-task-toggle"
 					 :class="{ active: task.hasChildren, rotate: task.showChildren }"
-					 @click="toggleChildren(task)">
-					<i class="fas fa-chevron-down"></i>
-				</div>
+					 @click="toggleChildren(task)"><i class="fas fa-chevron-down"></i></div>
 			</div>
+			<form v-if="task.newChild !== false" class="g-task-new-child">
+				<input type="text"
+					   class="g-task siimple-input siimple-input--fluid"
+					   placeholder="+ 子タスクを追加">
+
+			</form>
 			<List :children="task.children"
 				  v-if="task.showChildren" />
 		</li>
@@ -58,6 +63,9 @@
 			},
 			toggleChildren(task) {
 				this.$store.dispatch('tasks/toggleChildrenAction', task);
+			},
+			createNewChild(parent) {
+				this.$store.commit('tasks/createNewChild', parent);
 			}
 		},
 		created() {

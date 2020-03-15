@@ -22,7 +22,7 @@
 		color: #666666;
 	}
 	&-children {
-		margin-top: 5px;
+		margin: 5px 0 0 20px;
 	}
 	&-arrow {
 		padding: 0 10px 0 0;
@@ -39,8 +39,11 @@
 	&-archive {
 		cursor: pointer;
 	}
+	&-add {
+		padding: 0 5px;
+		cursor: pointer;
+	}
 	&-toggle {
-		width: 14px;
 		position: relative;
 		padding: 0 5px;
 		line-height: 20px;
@@ -48,7 +51,7 @@
 			cursor: pointer;
 		}
 		i {
-			color: $color-disabled;
+			color: transparent;
 		}
 		&.active i {
 			color: $color-text;
@@ -71,6 +74,9 @@
 			font-size: 1rem;
 			color: $color-base;
 		}
+	}
+	&-new-child {
+		margin: 5px 0 0 20px;
 	}
 }
 
