@@ -29,6 +29,7 @@ export const mutations = {
   getTasks(state, payload) {
     Object.keys(payload).forEach(function (index) {
       payload[index]['showChildren'] = false;
+      console.log(payload);
       state.list.push(payload[index]);
     });
   },

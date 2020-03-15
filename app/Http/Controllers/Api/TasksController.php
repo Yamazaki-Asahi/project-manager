@@ -43,7 +43,8 @@ class TasksController extends Controller
 
 	public static function store (Request $request) {
 		$task = new Task;
-		if ($task->project->isJoinedProject()) { // 現在ログインしているユーザーがプロジェクトに参加しているか
+		$project = Project::find($request->input('project_id'));
+		if ($project->isJoinedProject()) { // 現在ログインしているユーザーがプロジェクトに参加しているか
 			$task->fill($request->all());
 		}
 		$task->status_id = 1;
