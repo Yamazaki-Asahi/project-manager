@@ -27,3 +27,7 @@ Overwride siimple
 	background-color: $color-base;
 	width: 320px;
 }
+
+.siimple-radio > label {
+	box-sizing: content-box;
+}

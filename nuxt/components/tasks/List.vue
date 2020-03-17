@@ -1,11 +1,29 @@
 <template>
 	<ul class="page-tasks-list" :class="{'g-task-children': children}">
-		<li class="g-task" v-for="(task) in tasks">
+		<li class="g-task" v-for="(task, i) in tasks">
 			<div class="g-task-item" :style="{ backgroundColor: statuses[task.status_id].color }">
 				<nuxt-link :to="getQuery(task.id)"
 						   @click.native="openTask(task)"
 						   class="g-task-name">{{ task.name }}</nuxt-link>
-				<div class="g-task-status">{{ statuses[task.status_id].name }}</div>
+				<div class="g-task-status" @click="openStatuses(task)">
+                    <span>{{ statuses[task.status_id].name }}</span>
+                    <div class="g-task-select-status" v-if="task.openStatuses">
+                        <ul>
+                            <li v-for="(status, key) in statuses">
+                                <label class="siimple-label">
+                                    <div class="siimple-radio">
+                                        <input :name="'task'+task.id+'-status'"
+                                               :checked="task.status_id == key"
+                                               type="radio"
+                                               :id="'radio'+task.id+'-'+key"
+                                               @change="updateStatus(task, key)">
+                                        <label :for="'radio'+task.id+'-'+key"></label>
+                                    </div>{{ status.name }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 				<div class="g-task-add" @click="createNewChild(task)"><i class="fas fa-plus-circle"></i></div>
 				<div class="g-task-archive" @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
 				<div class="g-task-toggle"
@@ -66,6 +84,15 @@
 			},
 			createNewChild(parent) {
 				this.$store.commit('tasks/createNewChild', parent);
+			},
+			openStatuses(task) {
+				this.$store.commit('tasks/openStatuses', task);
+			},
+			updateStatus(task, statusId) {
+				this.$store.dispatch('tasks/updateStatusAction', {
+					task: task,
+					statusId: statusId
+                });
 			}
 		},
 		created() {

@@ -31,7 +31,23 @@
 		flex: 1;
 	}
 	&-status {
+		position: relative;
 		padding: 0 40px 0 20px;
+		cursor: pointer;
+	}
+	&-select-status {
+		position: absolute;
+		z-index: 5;
+		right: 0;
+		bottom: 0;
+		transform: translateY(100%);
+		background-color: $color-base;
+		box-shadow: $shadow;
+		padding: 10px;
+		width: 200px;
+		label {
+			white-space: nowrap;
+		}
 	}
 	&-archive {
 		padding: 0 5px;

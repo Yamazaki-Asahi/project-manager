@@ -9,7 +9,11 @@ class Task extends Model
 {
 	use SoftDeletes;
 	protected $dates = ['deleted_at'];
-    protected $fillable = ['name', 'project_id', 'task_id'];
+    protected $fillable = ['name', 'project_id', 'task_id', 'status_id'];
+	protected $casts = [
+		'id' => 'int',
+		'status_id' => 'int',
+	];
 
     public function project()
 	{

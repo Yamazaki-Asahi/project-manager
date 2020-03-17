@@ -61,6 +61,17 @@ class TasksController extends Controller
 		return $task;
 	}
 
+	public static function update($id, Request $request) {
+		$task = Task::find($id);
+		$project = $task->project;
+		if ($project->isJoinedProject()) {
+			$task->fill($request->all());
+			$task->update();
+			$task->hasChildren = $task->childTasks()->get()->count() ? true : false;
+			return $task;
+		}
+	}
+
 	public static function destroy ($id) {
 		$task = Task::find($id);
 		if ($task->project->isJoinedProject()) {
