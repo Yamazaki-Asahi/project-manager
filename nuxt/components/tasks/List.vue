@@ -5,24 +5,9 @@
 				<nuxt-link :to="getQuery(task.id)"
 						   @click.native="openTask(task)"
 						   class="g-task-name">{{ task.name }}</nuxt-link>
-				<div class="g-task-status" @click="openStatuses(task)">
-                    <span>{{ statuses[task.status_id].name }}</span>
-                    <div class="g-task-select-status" v-if="task.openStatuses">
-                        <ul>
-                            <li v-for="(status, key) in statuses">
-                                <label class="siimple-label">
-                                    <div class="siimple-radio">
-                                        <input :name="'task'+task.id+'-status'"
-                                               :checked="task.status_id == key"
-                                               type="radio"
-                                               :id="'radio'+task.id+'-'+key"
-                                               @change="updateStatus(task, key)">
-                                        <label :for="'radio'+task.id+'-'+key"></label>
-                                    </div>{{ status.name }}
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
+				<div class="g-task-status">
+                    <span @click="openStatusBox(task)">{{ statuses[task.status_id].name }}</span>
+					<StatusBox :task="task" />
                 </div>
 				<div class="g-task-add" @click="createNewChild(task)"><i class="fas fa-plus-circle"></i></div>
 				<div class="g-task-archive" @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
@@ -30,12 +15,11 @@
 					 :class="{ active: task.hasChildren, rotate: task.showChildren }"
 					 @click="toggleChildren(task)"><i class="fas fa-chevron-down"></i></div>
 			</div>
-			<form v-if="task.newChild !== false" class="g-task-new-child">
-				<input type="text"
-					   class="g-task siimple-input siimple-input--fluid"
-					   placeholder="+ 子タスクを追加">
-
-			</form>
+<!--			<form v-if="task.newChild !== false" class="g-task-new-child">-->
+<!--				<input type="text"-->
+<!--					   class="g-task siimple-input siimple-input&#45;&#45;fluid"-->
+<!--					   placeholder="+ 子タスクを追加">-->
+<!--			</form>-->
 			<List :children="task.children"
 				  v-if="task.showChildren" />
 		</li>
@@ -44,6 +28,7 @@
 
 <script>
 	import List from "./List";
+	import StatusBox from "./StatusBox";
 
 	export default {
 		name: 'List',
@@ -60,7 +45,8 @@
 			}
 		},
 		components: {
-			List
+			List,
+			StatusBox
 		},
 		props: ['children'],
 		methods: {
@@ -80,19 +66,17 @@
 				this.$store.dispatch('tasks/archiveTaskAction', task);
 			},
 			toggleChildren(task) {
-				this.$store.dispatch('tasks/toggleChildrenAction', task);
+				if (task.showChildren) {
+					this.$store.commit('tasks/closeChildren', task);
+				} else {
+					this.$store.dispatch('tasks/showChildrenAction', task);
+				}
 			},
 			createNewChild(parent) {
 				this.$store.commit('tasks/createNewChild', parent);
 			},
-			openStatuses(task) {
-				this.$store.commit('tasks/openStatuses', task);
-			},
-			updateStatus(task, statusId) {
-				this.$store.dispatch('tasks/updateStatusAction', {
-					task: task,
-					statusId: statusId
-                });
+			openStatusBox(task) {
+				this.$store.commit('tasks/openStatusBox', task);
 			}
 		},
 		created() {

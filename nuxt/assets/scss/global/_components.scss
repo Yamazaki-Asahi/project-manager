@@ -35,7 +35,7 @@
 		padding: 0 40px 0 20px;
 		cursor: pointer;
 	}
-	&-select-status {
+	&-select {
 		position: absolute;
 		z-index: 5;
 		right: 0;
@@ -47,6 +47,16 @@
 		width: 200px;
 		label {
 			white-space: nowrap;
+		}
+		&-close {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			i {
+				display: block;
+				cursor: pointer;
+				font-size: 2.4rem;
+			}
 		}
 	}
 	&-archive {

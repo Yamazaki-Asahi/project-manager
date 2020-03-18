@@ -2,16 +2,7 @@ import axios from "axios";
 
 export const state = () => ({
 	newTask: {
-		id: 0,
-		name: '',
-		status_id: 1,
-		supplement: '',
-		comments: [],
-		members: [],
-		order: 0,
-		children: [],
-		checked: false,
-		deadline: null
+		name: ''
 	},
 	list: []
 });
@@ -20,19 +11,18 @@ export const mutations = {
 	inputName(state, payload) {
 		state.newTask.name = payload;
 	},
-	registerNewTask(state, payload) {
-		let obj = payload;
-		obj['children'] = [];
-		obj['newChild'] = false;
-		obj['openStatuses'] = false;
-		state.list.push(obj);
+	registerNewTask(state, task) {
+		task.showChildren = false;
+		task.newChild = false;
+		task.openStatusBox = false;
+		state.list.push(task);
 		state.newTask.name = '';
 	},
 	getTasks(state, payload) {
 		Object.keys(payload).forEach(function (index) {
 			payload[index]['showChildren'] = false;
 			payload[index]['newChild'] = false;
-			payload[index]['openStatuses'] = false;
+			payload[index]['openStatusBox'] = false;
 			state.list.push(payload[index]);
 		});
 	},
@@ -42,21 +32,28 @@ export const mutations = {
 		});
 		state.list = tasks;
 	},
-	toggleChildren(state, payload) {
-		state.list.forEach(function (item, i) {
+	showChildren(state, payload) {
+		let newTaskList = state.list.map(function (item) {
 			if (item.id === payload.task.id) {
-				if (payload.type === 'open') {
-					state.list[i].children = payload.children;
-					state.list[i].children.forEach(function (child) {
-						child.newChild = false;
-					});
-					state.list[i].showChildren = true;
-				} else {
-					state.list[i].children = [];
-					state.list[i].showChildren = false;
-				}
+				item.children = payload.children;
+				item.children.forEach(function (child) {
+					child.newChild = false;
+				});
+				item.showChildren = true;
 			}
+			return item;
 		});
+		state.list = newTaskList;
+	},
+	closeChildren(state, task) {
+		let newTaskList = state.list.map(function (item) {
+			if (item.id === task.id) {
+				item.children = [];
+				item.showChildren = false;
+			}
+			return item;
+		});
+		state.list = newTaskList;
 	},
 	createNewChild(state, parent) {
 		state.list.forEach(function (item, i) {
@@ -65,21 +62,32 @@ export const mutations = {
 			}
 		});
 	},
-	openStatuses(state, task) {
-		state.list.forEach(function (item, i) {
+	openStatusBox(state, task) {
+		let newTaskList = state.list.map(function (item) {
 			if (item.id === task.id) {
-				state.list[i].openStatuses = true;
+				item.openStatusBox = true;
 			}
+			return item;
 		});
+		state.list = newTaskList;
+	},
+	closeStatusBox(state, task) {
+		let newTaskList = state.list.map(function (item) {
+			if (item.id === task.id) {
+				item.openStatusBox = false;
+			}
+			return item;
+		});
+		state.list = newTaskList;
 	},
 	updateTask(state, updatedTask) {
-		let newTaskList = state.list.map(function (item, i) {
+		let newTaskList = state.list.map(function (item) {
 			if (item.id === updatedTask.id) {
-				updatedTask['showChildren'] = false;
-				updatedTask['newChild'] = false;
-				updatedTask['openStatuses'] = false;
+				updatedTask.showChildren = false;
+				updatedTask.newChild = false;
+				updatedTask.openStatusBox = true;
 				return  updatedTask;
-			};
+			}
 			return item;
 		});
 		state.list = newTaskList;
@@ -120,11 +128,7 @@ export const actions = {
 		  });
 		context.commit('archiveTask', payload);
 	},
-	async toggleChildrenAction(context, task) {
-		if (task.showChildren) {
-			context.commit('toggleChildren', {task: task, type: 'close'})
-			return;
-		}
+	async showChildrenAction(context, task) {
 		let params = {
 			project_id: task.project_id,
 			parent_id: task.id,
@@ -134,7 +138,7 @@ export const actions = {
 		  .then((res) => {
 			  children = res.data;
 		  });
-		context.commit('toggleChildren', {task: task, type: 'open', children: children});
+		context.commit('showChildren', {task: task, children: children});
 	},
 	async updateStatusAction(context, payload) {
 		let params = new URLSearchParams();
