@@ -25,7 +25,7 @@ class Task extends Model
 		return $this->hasMany('App\Task', 'parent_id', 'id');
 	}
 
-	public function parent_task()
+	public function parentTask()
 	{
 		return $this->belongsTo('App\Task', 'parent_id', 'id');
 	}

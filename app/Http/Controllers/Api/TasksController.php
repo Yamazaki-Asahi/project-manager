@@ -53,7 +53,7 @@ class TasksController extends Controller
 					->get()
 					->count() + 1;
 		} else {
-			$task->order = Task::doesntHave('parent_task')
+			$task->order = Task::doesntHave('parentTask')
 					->get()
 					->count() + 1;
 		}
@@ -74,8 +74,20 @@ class TasksController extends Controller
 
 	public static function destroy ($id) {
 		$task = Task::find($id);
+		$parent_task_ids = [];
+        $parent_task = $task->parentTask;
+        // 親の階層を追跡する。
+        while($parent_task) {
+            array_unshift($parent_task_ids, $parent_task->id);
+            if ($parent_task->parentTask) {
+                $parent_task = $parent_task->parentTask;
+            } else {
+                $parent_task = null;
+            }
+        }
 		if ($task->project->isJoinedProject()) {
 			$task->delete();
+			return $parent_task_ids;
 		}
 	}
 }

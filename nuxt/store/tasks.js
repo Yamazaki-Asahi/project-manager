@@ -28,7 +28,7 @@ export const mutations = {
 	},
 	archiveTask(state, payload) {
 		let tasks = state.list.filter(item => {
-			return item.id !== payload.id;
+			return item.id !== payload.task.id;
 		});
 		state.list = tasks;
 	},
@@ -121,12 +121,13 @@ export const actions = {
 		});
 		context.commit('registerNewTask', data);
 	},
-	async archiveTaskAction(context, payload) {
-		await axios.delete('/api/tasks/' + payload.id)
-		  .then(() => {
-
+	async archiveTaskAction(context, task) {
+		let data = {};
+		await axios.delete('/api/tasks/' + task.id)
+		  .then((res) => {
+			  data = res.data;
 		  });
-		context.commit('archiveTask', payload);
+		context.commit('archiveTask', {task: task, parents: data});
 	},
 	async showChildrenAction(context, task) {
 		let params = {
