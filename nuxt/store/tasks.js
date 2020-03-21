@@ -18,19 +18,32 @@ export const mutations = {
 		state.list.push(task);
 		state.newTask.name = '';
 	},
-	getTasks(state, payload) {
-		Object.keys(payload).forEach(function (index) {
-			payload[index]['showChildren'] = false;
-			payload[index]['newChild'] = false;
-			payload[index]['openStatusBox'] = false;
-			state.list.push(payload[index]);
+	getTasks(state, tasks) {
+		tasks.forEach(function (task) {
+			task['showChildren'] = false;
+			task['newChild'] = false;
+			task['openStatusBox'] = false;
+			state.list.push(task);
 		});
 	},
 	archiveTask(state, payload) {
-		let tasks = state.list.filter(item => {
-			return item.id !== payload.task.id;
+		let copiedList = JSON.parse(JSON.stringify(state.list)); //コピーしたリスト
+		let strVal = 'copiedList';
+		// 親タスクが一つ以上あったら
+		if (payload.parent_ids.length) {
+			payload.parent_ids.forEach(function (parent_id) {
+				copiedList.forEach(function (item, i) {
+					if (item.id === parent_id) {
+						strVal += `[${i}].children`;
+					}
+				});
+			});
+		}
+		let newList = eval(strVal).filter(function (item) {
+			return item.id !== payload.archived_task.id;
 		});
-		state.list = tasks;
+		eval(strVal + ' = newList');
+		state.list = copiedList;
 	},
 	showChildren(state, payload) {
 		let newTaskList = state.list.map(function (item) {
@@ -127,7 +140,7 @@ export const actions = {
 		  .then((res) => {
 			  data = res.data;
 		  });
-		context.commit('archiveTask', {task: task, parents: data});
+		context.commit('archiveTask', {archived_task: task, parent_ids: data});
 	},
 	async showChildrenAction(context, task) {
 		let params = {

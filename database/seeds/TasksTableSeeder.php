@@ -43,11 +43,20 @@ class TasksTableSeeder extends Seeder
             'status_id' => 2,
             'parent_id' => 2,
             'order' => 2,
-            'name' => 'アップデート昨日の作成',
+            'name' => 'アップデート機能の作成',
         ]);
 
         DB::table('tasks')->insert([
             'id' => 5,
+            'project_id' => 1,
+            'status_id' => 2,
+            'parent_id' => 4,
+            'order' => 2,
+            'name' => 'ステートアップデート',
+        ]);
+
+        DB::table('tasks')->insert([
+            'id' => 6,
             'project_id' => 1,
             'status_id' => 1,
             'parent_id' => 1,
@@ -56,7 +65,7 @@ class TasksTableSeeder extends Seeder
         ]);
 
         DB::table('tasks')->insert([
-            'id' => 6,
+            'id' => 7,
             'project_id' => 1,
             'status_id' => 3,
             'order' => 3,
@@ -64,7 +73,7 @@ class TasksTableSeeder extends Seeder
         ]);
 
         DB::table('tasks')->insert([
-            'id' => 7,
+            'id' => 8,
             'project_id' => 1,
             'status_id' => 4,
             'order' => 3,
@@ -72,7 +81,7 @@ class TasksTableSeeder extends Seeder
         ]);
 
 		DB::table('tasks')->insert([
-			'id' => 8,
+			'id' => 9,
 			'project_id' => 2,
 			'status_id' => 1,
 			'order' => 1,
