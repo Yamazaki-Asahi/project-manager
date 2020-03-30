@@ -14,11 +14,11 @@
 				</div>
 				<div class="g-task-archive" @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
 				<div class="g-task-toggle"
-					 :class="{ active: task.hasChildren, rotate: task.showChildren }"
+					 :class="{ active: task.hasChildren, rotate: task.children.length }"
 					 @click="toggleChildren(task)"><i class="fas fa-chevron-down"></i></div>
 			</div>
 			<List :children="task.children"
-				  v-if="task.showChildren" />
+				  v-if="task.children.length" />
 		</li>
 	</ul>
 </template>

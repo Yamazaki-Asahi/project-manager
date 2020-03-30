@@ -12,57 +12,48 @@ export const mutations = {
 		state.newTask.name = payload;
 	},
 	registerNewTask(state, task) {
-		task.showChildren = false;
 		task.newChild = false;
 		task.openStatusBox = false;
+		task.children = [];
 		state.list.push(task);
 		state.newTask.name = '';
 	},
 	getTasks(state, tasks) {
 		tasks.forEach(function (task) {
-			task['showChildren'] = false;
-			task['newChild'] = false;
-			task['openStatusBox'] = false;
+			task.newChild = false;
+			task.openStatusBox = false;
+			task.children = [];
 			state.list.push(task);
 		});
 	},
 	archiveTask(state, payload) {
 		let copiedList = JSON.parse(JSON.stringify(state.list)); //コピーしたリスト
-		let strVal = 'copiedList';
-		// 親タスクが一つ以上あったら
-		if (payload.parent_ids.length) {
-			payload.parent_ids.forEach(function (parent_id) {
-				copiedList.forEach(function (item, i) {
-					if (item.id === parent_id) {
-						strVal += `[${i}].children`;
-					}
-				});
-			});
-		}
-		let newList = eval(strVal).filter(function (item) {
-			return item.id !== payload.archived_task.id;
+		let listStr = trackParentTaskList(copiedList, payload.archivedTask, payload.parentTaskIds);
+		let newList = eval(listStr).filter(function (item) {
+			return item.id !== payload.archivedTask.id;
 		});
-		eval(strVal + ' = newList');
+		eval(listStr + ' = newList');
 		state.list = copiedList;
 	},
 	showChildren(state, payload) {
-		let newTaskList = state.list.map(function (item) {
-			if (item.id === payload.task.id) {
-				item.children = payload.children;
-				item.children.forEach(function (child) {
-					child.newChild = false;
-				});
-				item.showChildren = true;
-			}
+		let copiedList = JSON.parse(JSON.stringify(state.list)); //コピーしたリスト
+		let listStr = trackParentTaskList(copiedList, payload.task, payload.parentTaskIds);
+		payload.children.forEach(function (item) {
+			item.newChild = false;
+			item.openStatusBox = false;
+			item.children = [];
+		});
+		let newList = eval(listStr).map(function (item) {
+			if (item.id === payload.task.id) item.children = payload.children;
 			return item;
 		});
-		state.list = newTaskList;
+		eval(listStr + ' = newList');
+		state.list = copiedList;
 	},
 	closeChildren(state, task) {
 		let newTaskList = state.list.map(function (item) {
 			if (item.id === task.id) {
 				item.children = [];
-				item.showChildren = false;
 			}
 			return item;
 		});
@@ -96,10 +87,9 @@ export const mutations = {
 	updateTask(state, updatedTask) {
 		let newTaskList = state.list.map(function (item) {
 			if (item.id === updatedTask.id) {
-				updatedTask.showChildren = false;
 				updatedTask.newChild = false;
 				updatedTask.openStatusBox = true;
-				return  updatedTask;
+				return updatedTask;
 			}
 			return item;
 		});
@@ -114,12 +104,12 @@ export const actions = {
 			project_id: project_id
 		};
 		await axios.get('/api/tasks/', {params: params})
-		  .then((res) => {
-			  data = res.data;
-			  context.commit('getTasks', data);
-		  }).catch(e => {
-			  context.commit('error/setError', e.response, {root: true});
-		  });
+			.then((res) => {
+				data = res.data;
+				context.commit('getTasks', data.tasks);
+			}).catch(e => {
+				context.commit('error/setError', e.response, {root: true});
+			});
 	},
 	async registerNewTaskAction(context, payload) {
 		let data = {};
@@ -137,31 +127,49 @@ export const actions = {
 	async archiveTaskAction(context, task) {
 		let data = {};
 		await axios.delete('/api/tasks/' + task.id)
-		  .then((res) => {
-			  data = res.data;
-		  });
-		context.commit('archiveTask', {archived_task: task, parent_ids: data});
+			.then((res) => {
+				data = res.data;
+			});
+		context.commit('archiveTask', {archivedTask: task, parentTaskIds: data.parentTaskIds});
 	},
 	async showChildrenAction(context, task) {
 		let params = {
 			project_id: task.project_id,
 			parent_id: task.id,
 		};
-		let children = [];
+		let data = {};
 		await axios.get('/api/tasks/', {params: params})
-		  .then((res) => {
-			  children = res.data;
-		  });
-		context.commit('showChildren', {task: task, children: children});
+			.then((res) => {
+				data = res.data;
+			});
+		context.commit('showChildren', {
+			task: task,
+			children: data.tasks,
+			parentTaskIds: data.parentTaskIds
+		});
 	},
 	async updateStatusAction(context, payload) {
 		let params = new URLSearchParams();
 		params.append('status_id', payload.statusId);
 		let data = {};
-		await axios.put('/api/tasks/'+payload.task.id, params)
-		  .then((res) => {
+		await axios.put('/api/tasks/' + payload.task.id, params)
+			.then((res) => {
 				data = res.data;
-		  });
+			});
 		context.commit('updateTask', data);
 	}
 };
+
+//　親タスクを追跡する関数
+function trackParentTaskList(copiedList, task, parentTaskIds) {
+	let str = 'copiedList';
+	if (!parentTaskIds.length) return str;
+	parentTaskIds.forEach(function (parentTaskId) {
+		eval(str).forEach(function (item, index) {
+			if (item.id === parentTaskId) {
+				str += `[${index}].children`;
+			}
+		});
+	});
+	return str;
+}

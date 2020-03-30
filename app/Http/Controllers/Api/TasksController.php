@@ -16,7 +16,7 @@ class TasksController extends Controller
 
     public static function index (Request $request) {
 		$project = Project::find($request->input('project_id'));
-		$parent_id = $request->input('parent_id') ? $request->input('parent_id') : null;
+		$parent_id = $request->input('parent_id') ? intval($request->input('parent_id')) : null;
 		$project->isJoinedProject(); // 現在ログインしているユーザーがプロジェクトに参加しているか
     	$tasks = Project::where('id', $project->id)
 			->first()
@@ -30,7 +30,14 @@ class TasksController extends Controller
 				$task->hasChildren = false;
 			}
 		}
-    	return $tasks;
+        $parent_task_ids = [];
+    	if ($parent_id) {
+            $parent_task_ids = Task::find($parent_id)->getParentTaskIds();
+        }
+    	return response()->json([
+    	    'tasks' => $tasks,
+            'parentTaskIds' => $parent_task_ids
+        ]);
 	}
 
 	public static function show ($id) {
@@ -74,20 +81,12 @@ class TasksController extends Controller
 
 	public static function destroy ($id) {
 		$task = Task::find($id);
-		$parent_task_ids = [];
-        $parent_task = $task->parentTask;
-        // 親の階層を追跡する。
-        while($parent_task) {
-            array_unshift($parent_task_ids, $parent_task->id);
-            if ($parent_task->parentTask) {
-                $parent_task = $parent_task->parentTask;
-            } else {
-                $parent_task = null;
-            }
-        }
+        $parent_task_ids = $task->getParentTaskIds();
 		if ($task->project->isJoinedProject()) {
 			$task->delete();
-			return $parent_task_ids;
+            return response()->json([
+                'parentTaskIds' => $parent_task_ids
+            ]);
 		}
 	}
 }
