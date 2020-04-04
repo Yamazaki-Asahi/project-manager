@@ -12,22 +12,18 @@ export const mutations = {
 		state.newTask.name = payload;
 	},
 	registerNewTask(state, task) {
-		task.newChild = false;
-		task.openStatusBox = false;
-		task.children = [];
-		state.list.push(task);
+		let newTask = setTemporaryStatus(task);
+		state.list.push(newTask);
 		state.newTask.name = '';
 	},
 	getTasks(state, tasks) {
 		tasks.forEach(function (task) {
-			task.newChild = false;
-			task.openStatusBox = false;
-			task.children = [];
-			state.list.push(task);
+			let _task = setTemporaryStatus(task);
+			state.list.push(_task);
 		});
 	},
 	archiveTask(state, payload) {
-		let copiedList = JSON.parse(JSON.stringify(state.list)); //コピーしたリスト
+		let copiedList = JSON.parse(JSON.stringify(state.list));
 		let listStr = trackParentTaskList(copiedList, payload.archivedTask, payload.parentTaskIds);
 		let newList = eval(listStr).filter(function (item) {
 			return item.id !== payload.archivedTask.id;
@@ -36,18 +32,17 @@ export const mutations = {
 		state.list = copiedList;
 	},
 	showChildren(state, payload) {
-		let copiedList = JSON.parse(JSON.stringify(state.list)); //コピーしたリスト
+		let copiedList = JSON.parse(JSON.stringify(state.list));
 		let listStr = trackParentTaskList(copiedList, payload.task, payload.parentTaskIds);
-		payload.children.forEach(function (item) {
-			item.newChild = false;
-			item.openStatusBox = false;
-			item.children = [];
-		});
-		let newList = eval(listStr).map(function (item) {
-			if (item.id === payload.task.id) item.children = payload.children;
+		let newTaskList = eval(listStr).map(function (item) {
+			if (item.id === payload.task.id) {
+				item.children = payload.children.map(function (child) {
+					return setTemporaryStatus(child);
+				});
+			}
 			return item;
 		});
-		eval(listStr + ' = newList');
+		eval(listStr + ' = newTaskList');
 		state.list = copiedList;
 	},
 	closeChildren(state, task) {
@@ -84,15 +79,16 @@ export const mutations = {
 		});
 		state.list = newTaskList;
 	},
-	updateTask(state, updatedTask) {
-		let newTaskList = state.list.map(function (item) {
-			if (item.id === updatedTask.id) {
-				updatedTask.newChild = false;
-				updatedTask.openStatusBox = true;
-				return updatedTask;
+	updateTask(state, payload) {
+		let copiedList = JSON.parse(JSON.stringify(state.list));
+		let listStr = trackParentTaskList(copiedList, payload.updatedTask, payload.parentTaskIds);
+		let newTaskList = eval(listStr).map(function (item) {
+			if (item.id === payload.updatedTask.id) {
+				return setTemporaryStatus(payload.updatedTask);
 			}
 			return item;
 		});
+		eval(listStr + ' = newTaskList');
 		state.list = newTaskList;
 	}
 };
@@ -130,7 +126,10 @@ export const actions = {
 			.then((res) => {
 				data = res.data;
 			});
-		context.commit('archiveTask', {archivedTask: task, parentTaskIds: data.parentTaskIds});
+		context.commit('archiveTask', {
+			archivedTask: task,
+			parentTaskIds: data.parentTaskIds
+		});
 	},
 	async showChildrenAction(context, task) {
 		let params = {
@@ -156,7 +155,10 @@ export const actions = {
 			.then((res) => {
 				data = res.data;
 			});
-		context.commit('updateTask', data);
+		context.commit('updateTask', {
+			updatedTask: data.task,
+			parentTaskIds: data.parentTaskIds
+		});
 	}
 };
 
@@ -172,4 +174,12 @@ function trackParentTaskList(copiedList, task, parentTaskIds) {
 		});
 	});
 	return str;
+}
+
+//　データベースに保持しない一時的なステートをセットする関数
+function setTemporaryStatus(task, children = []) {
+	task.newChild = false;
+	task.openStatusBox = false;
+	task.children = children;
+	return task;
 }

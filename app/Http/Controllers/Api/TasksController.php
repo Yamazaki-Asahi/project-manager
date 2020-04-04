@@ -75,7 +75,11 @@ class TasksController extends Controller
 			$task->fill($request->all());
 			$task->update();
 			$task->hasChildren = $task->childTasks()->get()->count() ? true : false;
-			return $task;
+            $parent_task_ids = $task->getParentTaskIds();
+            return response()->json([
+                'task' => $task,
+                'parentTaskIds' => $parent_task_ids
+            ]);
 		}
 	}
 
