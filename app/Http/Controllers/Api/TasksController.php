@@ -25,19 +25,12 @@ class TasksController extends Controller
 			->get();
     	foreach ($tasks as $task) {
     		if ($task->childTasks()->get()->count() > 0) {
-    			$task->hasChildren = true;
+    			$task->has_children = true;
 			} else {
-				$task->hasChildren = false;
+				$task->has_children = false;
 			}
 		}
-        $parent_task_ids = [];
-    	if ($parent_id) {
-            $parent_task_ids = Task::find($parent_id)->getParentTaskIds();
-        }
-    	return response()->json([
-    	    'tasks' => $tasks,
-            'parentTaskIds' => $parent_task_ids
-        ]);
+    	return $tasks;
 	}
 
 	public static function show ($id) {
@@ -51,7 +44,7 @@ class TasksController extends Controller
 	public static function store (Request $request) {
 		$task = new Task;
 		$project = Project::find($request->input('project_id'));
-		if ($project->isJoinedProject()) { // 現在ログインしているユーザーがプロジェクトに参加しているか
+		if ($project->isJoinedProject()) {
 			$task->fill($request->all());
 		}
 		$task->status_id = 1;
@@ -74,23 +67,15 @@ class TasksController extends Controller
 		if ($project->isJoinedProject()) {
 			$task->fill($request->all());
 			$task->update();
-			$task->hasChildren = $task->childTasks()->get()->count() ? true : false;
-            $parent_task_ids = $task->getParentTaskIds();
-            return response()->json([
-                'task' => $task,
-                'parentTaskIds' => $parent_task_ids
-            ]);
+			$task->has_children = $task->childTasks()->get()->count() ? true : false;
+            return $task;
 		}
 	}
 
 	public static function destroy ($id) {
 		$task = Task::find($id);
-        $parent_task_ids = $task->getParentTaskIds();
 		if ($task->project->isJoinedProject()) {
 			$task->delete();
-            return response()->json([
-                'parentTaskIds' => $parent_task_ids
-            ]);
 		}
 	}
 }

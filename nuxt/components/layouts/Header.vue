@@ -1,7 +1,7 @@
 <template>
 	<header class="l-header siimple-navbar">
 		<h1>Nuxt Project</h1>
-		<ul class="l-header-nav siimple--float-right">
+		<ul class="l-header-nav siimple--float-right" v-if="user.id">
 			<li class="siimple-navbar-item"><a href="" class="siimple-navbar-item"><b>プロジェクトA</b></a></li>
 			<li class="siimple-navbar-item">
 				<a href="" class="siimple-navbar-item">{{ user.name }}</a>
