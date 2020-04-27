@@ -9,6 +9,7 @@ class Task extends Model
 {
 	use SoftDeletes;
 	protected $dates = ['deleted_at'];
+	protected $appends = ['parent_task_ids'];
     protected $fillable = ['name', 'project_id', 'task_id', 'status_id'];
 	protected $casts = [
 		'id' => 'int',
@@ -30,7 +31,7 @@ class Task extends Model
 		return $this->belongsTo('App\Task', 'parent_id', 'id');
 	}
 
-    public function getParentTaskIds() {
+    public function getParentTaskIdsAttribute() {
         $parent_task_ids = [];
         $parent_task = $this->parentTask;
         // 親の階層を追跡する。

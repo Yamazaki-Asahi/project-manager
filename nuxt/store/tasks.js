@@ -22,18 +22,9 @@ export const mutations = {
 			state.list.push(_task);
 		});
 	},
-	archiveTask(state, payload) {
-		let copiedList = JSON.parse(JSON.stringify(state.list));
-		let listStr = trackParentTaskList(copiedList, payload.archivedTask, payload.parentTaskIds);
-		let newList = eval(listStr).filter(function (item) {
-			return item.id !== payload.archivedTask.id;
-		});
-		eval(listStr + ' = newList');
-		state.list = copiedList;
-	},
 	showChildren(state, payload) {
 		let copiedList = JSON.parse(JSON.stringify(state.list));
-		let listStr = trackParentTaskList(copiedList, payload.task, payload.parentTaskIds);
+		let listStr = trackParentTaskList(copiedList, payload.task);
 		let newTaskList = eval(listStr).map(function (item) {
 			if (item.id === payload.task.id) {
 				item.children = payload.children.map(function (child) {
@@ -46,50 +37,65 @@ export const mutations = {
 		state.list = copiedList;
 	},
 	closeChildren(state, task) {
-		let newTaskList = state.list.map(function (item) {
+		let copiedList = JSON.parse(JSON.stringify(state.list));
+		let listStr = trackParentTaskList(copiedList, task);
+		let newTaskList = eval(listStr).map(function (item) {
 			if (item.id === task.id) {
 				item.children = [];
 			}
 			return item;
 		});
-		state.list = newTaskList;
+		eval(listStr + ' = newTaskList');
+		state.list = copiedList;
 	},
 	createNewChild(state, parent) {
 		state.list.forEach(function (item, i) {
 			if (item.id === parent.id) {
-				state.list[i].newChild = '';
+				state.list[i].new_child = '';
 			}
 		});
 	},
 	openStatusBox(state, task) {
-		let newTaskList = state.list.map(function (item) {
-			if (item.id === task.id) {
-				item.openStatusBox = true;
-			}
-			return item;
-		});
-		state.list = newTaskList;
-	},
-	closeStatusBox(state, task) {
-		let newTaskList = state.list.map(function (item) {
-			if (item.id === task.id) {
-				item.openStatusBox = false;
-			}
-			return item;
-		});
-		state.list = newTaskList;
-	},
-	updateTask(state, payload) {
 		let copiedList = JSON.parse(JSON.stringify(state.list));
-		let listStr = trackParentTaskList(copiedList, payload.updatedTask, payload.parentTaskIds);
+		let listStr = trackParentTaskList(copiedList, task);
 		let newTaskList = eval(listStr).map(function (item) {
-			if (item.id === payload.updatedTask.id) {
-				return setTemporaryStatus(payload.updatedTask);
+			if (item.id === task.id) {
+				item.open_status_box = true;
 			}
 			return item;
 		});
 		eval(listStr + ' = newTaskList');
+		state.list = copiedList;
+	},
+	closeStatusBox(state, task) {
+		let newTaskList = state.list.map(function (item) {
+			if (item.id === task.id) {
+				item.open_status_box = false;
+			}
+			return item;
+		});
 		state.list = newTaskList;
+	},
+	updateTask(state, updatedTask) {
+		let copiedList = JSON.parse(JSON.stringify(state.list));
+		let listStr = trackParentTaskList(copiedList, updatedTask);
+		let newTaskList = eval(listStr).map(function (item) {
+			if (item.id === updatedTask.id) {
+				return setTemporaryStatus(updatedTask);
+			}
+			return item;
+		});
+		eval(listStr + ' = newTaskList');
+		state.list = copiedList;
+	},
+	archiveTask(state, archivedTask) {
+		let copiedList = JSON.parse(JSON.stringify(state.list));
+		let listStr = trackParentTaskList(copiedList, archivedTask);
+		let newList = eval(listStr).filter(function (item) {
+			return item.id !== archivedTask.id;
+		});
+		eval(listStr + ' = newList');
+		state.list = copiedList;
 	}
 };
 
@@ -102,7 +108,7 @@ export const actions = {
 		await axios.get('/api/tasks/', {params: params})
 			.then((res) => {
 				data = res.data;
-				context.commit('getTasks', data.tasks);
+				context.commit('getTasks', data);
 			}).catch(e => {
 				context.commit('error/setError', e.response, {root: true});
 			});
@@ -120,17 +126,6 @@ export const actions = {
 		});
 		context.commit('registerNewTask', data);
 	},
-	async archiveTaskAction(context, task) {
-		let data = {};
-		await axios.delete('/api/tasks/' + task.id)
-			.then((res) => {
-				data = res.data;
-			});
-		context.commit('archiveTask', {
-			archivedTask: task,
-			parentTaskIds: data.parentTaskIds
-		});
-	},
 	async showChildrenAction(context, task) {
 		let params = {
 			project_id: task.project_id,
@@ -143,8 +138,7 @@ export const actions = {
 			});
 		context.commit('showChildren', {
 			task: task,
-			children: data.tasks,
-			parentTaskIds: data.parentTaskIds
+			children: data,
 		});
 	},
 	async updateStatusAction(context, payload) {
@@ -155,20 +149,25 @@ export const actions = {
 			.then((res) => {
 				data = res.data;
 			});
-		context.commit('updateTask', {
-			updatedTask: data.task,
-			parentTaskIds: data.parentTaskIds
-		});
-	}
+		context.commit('updateTask', data);
+	},
+	async archiveTaskAction(context, task) {
+		let data = {};
+		await axios.delete('/api/tasks/' + task.id)
+			.then((res) => {
+				data = res.data;
+			});
+		context.commit('archiveTask', task);
+	},
 };
 
 //　親タスクを追跡する関数
-function trackParentTaskList(copiedList, task, parentTaskIds) {
+function trackParentTaskList(copiedList, task) {
 	let str = 'copiedList';
-	if (!parentTaskIds.length) return str;
-	parentTaskIds.forEach(function (parentTaskId) {
+	if (!task.parent_task_ids.length) return str;
+	task.parent_task_ids.forEach(function (parent_task_id) {
 		eval(str).forEach(function (item, index) {
-			if (item.id === parentTaskId) {
+			if (item.id === parent_task_id) {
 				str += `[${index}].children`;
 			}
 		});
@@ -178,8 +177,8 @@ function trackParentTaskList(copiedList, task, parentTaskIds) {
 
 //　データベースに保持しない一時的なステートをセットする関数
 function setTemporaryStatus(task, children = []) {
-	task.newChild = false;
-	task.openStatusBox = false;
+	task.new_child = false;
+	task.open_status_box = false;
 	task.children = children;
 	return task;
 }
