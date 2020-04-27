@@ -6,6 +6,12 @@ export const state = () => ({
 
 export const mutations = {
 	openTask(state, payload) {
+		payload.children = payload.children.map(function (child) {
+			child.newChild = false;
+			child.openStatusBox = false;
+			child.children = [];
+			return child;
+		});
 		Object.keys(payload).forEach((key) => {
 			state[key] = payload[key];
 		});

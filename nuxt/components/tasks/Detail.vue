@@ -17,7 +17,9 @@
 						</div>
 						<div class="page-tasks-detail-children">
 							<h2>子タスク</h2>
-							<List :children="task.children" />
+							<ul>
+								<li v-for="task in task.children">{{ task.name }}</li>
+							</ul>
 						</div>
 						<div class="page-tasks-detail-checklist">
 							<h2>チェックリスト</h2>
@@ -40,9 +42,6 @@
 						<div class="page-tasks-detail-status">
 							<h3>ステータス</h3>
 							<p :style="{ backgroundColor: statuses[task.status_id].color }">{{ statuses[task.status_id].name }}</p>
-						</div>
-						<div class="page-tasks-detail-tags">
-							<h3>タグ</h3>
 						</div>
 					</aside>
 				</div>
