@@ -8,7 +8,6 @@
 		justify-content: space-between;
 		align-items: center;
 		height: 40px;
-		line-height: 40px;
 		font-size: 1.4rem;
 		box-shadow: $shadow;
 		padding: 0 20px;
@@ -24,16 +23,56 @@
 	&-children {
 		margin: 5px 0 0 20px;
 	}
+	&-checkbox {
+		position: relative;
+		padding: 0 16px 0 0;
+		input {
+			display: none;
+		}
+		span {
+			display: block;
+			position: relative;
+			width: 20px;
+			height: 20px;
+			border: 1px solid $color-text;
+			border-radius: 4px;
+			background-color: $color-base;
+			pointer-events: none;
+		}
+		input:checked + span:before {
+			content: '\f00c';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-family: 'FontAwesome';
+			font-size: 1.2rem;
+		}
+	}
 	&-arrow {
 		padding: 0 10px 0 0;
 	}
 	&-name {
+		display: flex;
+		align-items: center;
 		flex: 1;
 	}
 	&-status {
 		position: relative;
 		padding: 0 40px 0 20px;
 		cursor: pointer;
+		span {
+			position: relative;
+		}
+		span:after {
+			content: '\f0d7';
+			position: absolute;
+			top: 50%;
+			right: -16px;
+			transform: translateY(-50%);
+			font-family: 'fontAwesome';
+			font-size: 1.6rem;
+		}
 	}
 	&-select {
 		position: absolute;
@@ -60,18 +99,18 @@
 		}
 	}
 	&-archive {
-		padding: 0 5px;
+		padding: 0 8px;
 	}
 	&-archive {
 		cursor: pointer;
 	}
 	&-add {
-		padding: 0 5px;
+		padding: 0 8px;
 		cursor: pointer;
 	}
 	&-toggle {
 		position: relative;
-		padding: 0 5px;
+		padding: 0 8px;
 		line-height: 20px;
 		&.active {
 			cursor: pointer;
@@ -142,32 +181,31 @@
 	background-color: $color-base;
 	padding: 30px;
 	overflow-y: auto;
-}
-
-.g-modal-close-btn {
-	position: absolute;
-	display: block;
-	top: 5px;
-	right: 5px;
-	width: 30px;
-	height: 30px;
-	cursor: pointer;
-	border-radius: 50%;
-	&:before,
-	&:after {
-		content: '';
+	&-close-btn {
 		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 20px;
-		height: 3px;
-		background-color: #000;
-	}
-	&:before {
-		transform: translate(-50%, -50%) rotate(-45deg);
-	}
-	&:after {
-		transform: translate(-50%, -50%) rotate(45deg);
+		display: block;
+		top: 5px;
+		right: 5px;
+		width: 30px;
+		height: 30px;
+		cursor: pointer;
+		border-radius: 50%;
+		&:before,
+		&:after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 20px;
+			height: 3px;
+			background-color: #000;
+		}
+		&:before {
+			transform: translate(-50%, -50%) rotate(-45deg);
+		}
+		&:after {
+			transform: translate(-50%, -50%) rotate(45deg);
+		}
 	}
 }
 

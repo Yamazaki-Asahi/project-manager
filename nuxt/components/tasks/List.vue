@@ -2,6 +2,10 @@
 	<ul class="page-tasks-list" :class="{'g-task-children': children}">
 		<li class="g-task" v-for="(task, i) in tasks">
 			<div class="g-task-item" :style="{ backgroundColor: statuses[task.status_id].color }">
+				<label class="g-task-checkbox">
+					<input type="checkbox">
+					<span></span>
+				</label>
 				<nuxt-link :to="getQuery(task.id)"
 						   @click.native="openTask(task)"
 						   class="g-task-name">{{ task.name }}</nuxt-link>
