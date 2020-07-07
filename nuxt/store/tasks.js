@@ -152,6 +152,8 @@ export const actions = {
 		context.commit('updateTask', data);
 	},
 	async archiveTaskAction(context, task) {
+		let c = confirm(`タスク「${task.name}」をアーカイブしますか？`);
+		if (!c) return false;
 		let data = {};
 		await axios.delete('/api/tasks/' + task.id)
 			.then((res) => {

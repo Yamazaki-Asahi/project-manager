@@ -5,9 +5,6 @@
             <div class="l-side">
                 <ul class="l-side-menu">
                     <li><a href="/projects/1/tasks">タスク</a></li>
-                    <li><a href="/projects/1/wiki">Wiki</a></li>
-                    <li><a href="/projects/1/chat">チャット</a></li>
-                    <li><a href="/projects/1/files">ファイル</a></li>
                     <li><a href="/projects/1/files">アクティビティ</a></li>
                     <li><a href="/projects/1/setting">プロジェクト設定</a></li>
                 </ul>

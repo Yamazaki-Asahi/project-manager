@@ -1,8 +1,12 @@
 <template>
 	<ul class="page-tasks-list" :class="{'g-task-children': children}">
-		<li class="g-task" v-for="(task, i) in tasks">
+		<li class="g-task" v-for="task in tasks">
 			<div :style="{ backgroundColor: statuses[task.status_id].color }">
-				<nuxt-link :to="getQuery(task.id)"
+				<label class="g-task-checkbox">
+					<input type="checkbox">
+					<span></span>
+				</label>
+				<nuxt-link :to="setQuery(task)"
 						   @click.native="openTask(task)"
 						   class="g-task-name">{{ task.name }}</nuxt-link>
 				<div class="g-task-status">
@@ -18,6 +22,7 @@
 					 @click="toggleChildren(task)"><i class="fas fa-chevron-down"></i></div>
 			</div>
 			<List :children="task.children"
+				  :type="type"
 				  v-if="task.children.length" />
 		</li>
 	</ul>
@@ -45,22 +50,26 @@
 			List,
 			StatusBox
 		},
-		props: ['children'],
+		props: [
+			'type',
+			'children',
+		],
 		methods: {
-			getQuery(task_id) {
-				let query = Object.assign({task_id : task_id}, this.$route.query);
+			setQuery(task) {
+				let query = Object.assign({}, this.$route.query);
+				query.task_id = task.id;
 				return {
 					path: 'tasks',
 					query: query
 				};
 			},
 			openTask(task) {
+				this.$store.commit('task/closeTask');
 				this.$store.dispatch('task/openTaskAction', task.id);
 			},
 			archiveTask(task) {
-				let c = confirm(`タスク「${task.name}」をアーカイブしますか？`);
-				if (!c) return false;
 				this.$store.dispatch('tasks/archiveTaskAction', task);
+				this.$store.dispatch('task/archiveTaskAction', task);
 			},
 			toggleChildren(task) {
 				if (task.children.length) {
@@ -69,9 +78,9 @@
 					this.$store.dispatch('tasks/showChildrenAction', task);
 				}
 			},
-			createNewChild(parent) {
-				this.$store.commit('tasks/createNewChild', parent);
-			},
+			// createNewChild(parent) {
+			// 	this.$store.commit('tasks/createNewChild', parent);
+			// },
 			openStatusBox(task) {
 				this.$store.commit('tasks/openStatusBox', task);
 			}

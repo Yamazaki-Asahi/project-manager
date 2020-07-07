@@ -1,9 +1,8 @@
 <template>
 	<div class="page-tasks-detail">
 		<div class="g-overlay">
-			<div class="g-modal" v-click-outside="closeModal">
-				<span class="g-modal-close-btn" @click="closeModal"></span>
-
+			<div class="g-modal" v-click-outside="closeTask">
+				<span class="g-modal-close-btn" @click="closeTask"></span>
 				<div class="page-tasks-detail-ttl">
 					<input v-model="task.name" class="siimple-input siimple-input--fluid">
 				</div>
@@ -17,7 +16,7 @@
 						</div>
 						<div class="page-tasks-detail-children">
 							<h2>子タスク</h2>
-							<List :children="task.children" />
+							<List type="detail" :children="task.children" />
 						</div>
 						<div class="page-tasks-detail-checklist">
 							<h2>チェックリスト</h2>
@@ -40,9 +39,6 @@
 						<div class="page-tasks-detail-status">
 							<h3>ステータス</h3>
 							<p :style="{ backgroundColor: statuses[task.status_id].color }">{{ statuses[task.status_id].name }}</p>
-						</div>
-						<div class="page-tasks-detail-tags">
-							<h3>タグ</h3>
 						</div>
 					</aside>
 				</div>
@@ -67,7 +63,7 @@
 			List
 		},
 		methods: {
-			closeModal() {
+			closeTask() {
 				let query = Object.assign({}, this.$route.query);
 				delete query['task_id'];
 				this.$router.push({query: query});

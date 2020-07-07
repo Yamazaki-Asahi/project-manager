@@ -35,7 +35,7 @@ export default {
 	/*
 	** Nuxt.js dev-modules
 	*/
-	buildModules: [],
+	buildModules: ['@nuxt/typescript-build'],
 	/*
 	** Nuxt.js modules
 	*/
@@ -55,7 +55,11 @@ export default {
 		/*
 		** You can extend webpack config here
 		*/
-		extend(config, ctx) {
+		extend(config: any, ctx: any) {
 		}
+	},
+	typescript: {
+		typeCheck: true,
+		ignoreNotFoundWarnings: true
 	}
 }
