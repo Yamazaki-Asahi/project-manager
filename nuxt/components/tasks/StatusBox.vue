@@ -20,7 +20,6 @@
 
 <script>
 	export default {
-		name: 'List',
 		computed: {
 			statuses() {
 				return this.$store.state.statuses.list

@@ -8,10 +8,9 @@
                    v-model="newTaskName"
                    placeholder="＋ 新しいタスクを追加">
         </form>
-        <List children="" />
-        <Detail v-if="task.open"/>
+        <List />
+        <Detail v-if="task.open" />
     </div>
-
 </template>
 
 <script>
@@ -55,7 +54,7 @@
                     project_id: this.$route.params.id,
                 };
 				this.$store.dispatch('tasks/registerNewTaskAction', params);
-			},
+			}
 		},
 		created() {
 			this.$store.dispatch('statuses/getStatusesAction');

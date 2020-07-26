@@ -9,7 +9,6 @@ class Task extends Model
 {
 	use SoftDeletes;
 	protected $dates = ['deleted_at'];
-	protected $appends = ['parent_task_ids'];
     protected $fillable = ['name', 'project_id', 'task_id', 'status_id'];
 	protected $casts = [
 		'id' => 'int',
@@ -30,19 +29,4 @@ class Task extends Model
 	{
 		return $this->belongsTo('App\Task', 'parent_id', 'id');
 	}
-
-    public function getParentTaskIdsAttribute() {
-        $parent_task_ids = [];
-        $parent_task = $this->parentTask;
-        // 親の階層を追跡する。
-        while($parent_task) {
-            array_unshift($parent_task_ids, $parent_task->id);
-            if ($parent_task->parentTask) {
-                $parent_task = $parent_task->parentTask;
-            } else {
-                $parent_task = null;
-            }
-        }
-        return $parent_task_ids;
-    }
 }

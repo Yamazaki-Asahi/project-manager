@@ -1,31 +1,31 @@
 import axios from 'axios';
 
 export const state = () => ({
-	open: false,
+	open: false
 });
 
 export const mutations = {
-	openTask(state, payload) {
-		payload.children = payload.children.map(function (child) {
+	openTask(state, task) {
+		task.children = task.children.map(function (child) {
 			child.newChild = false;
 			child.openStatusBox = false;
 			child.children = [];
 			return child;
 		});
-		Object.keys(payload).forEach((key) => {
-			state[key] = payload[key];
+		Object.keys(task).forEach((key) => {
+			state[key] = task[key];
 		});
 		state.open = true;
 	},
 	closeTask(state) {
-		state.open = false;
+		state.open = false
 	}
 };
 
 export const actions = {
-	async openTaskAction(context, id) {
+	async openTaskAction(context, task_id) {
 		let data = {};
-		await axios.get('/api/tasks/'+id)
+		await axios.get('/api/tasks/'+task_id)
 			.then((res) => {
 				data = res.data;
 			});

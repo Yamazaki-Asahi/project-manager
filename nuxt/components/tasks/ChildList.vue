@@ -1,6 +1,6 @@
 <template>
-	<ul class="page-tasks-list">
-		<li class="g-task" v-for="task in tasks">
+	<ul class="page-tasks-list g-task-list">
+		<li class="g-task g-task-child" v-for="task in tasks">
 			<div :style="{ backgroundColor: statuses[task.status_id].color }">
 				<label class="g-task-checkbox">
 					<input type="checkbox">
@@ -14,36 +14,26 @@
 					<StatusBox :task="task" />
 				</div>
 				<div class="g-task-archive tooltip" @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
-				<div class="g-task-add tooltip"
-					 @click="createNewChild(task)">
-					<i class="fas fa-plus-circle"></i>
-				</div>
-				<div class="g-task-toggle tooltip"
-					 :class="{ active: task.children.length, rotate: task.show_children }"
-					 @click="toggleChildren(task)"><i class="fas fa-chevron-down"></i></div>
+				<div class="g-task-empty"></div>
 			</div>
-			<ChildList v-if="task.show_children" :tasks="task.children" />
 		</li>
 	</ul>
 </template>
 
 <script>
 	import StatusBox from "./StatusBox";
-	import ChildList from "./ChildList";
 
 	export default {
-		name: 'List',
+		props: [
+			'tasks'
+		],
 		computed: {
-			tasks() {
-				return this.$store.state.tasks.list
-			},
 			statuses() {
 				return this.$store.state.statuses.list
 			}
 		},
 		components: {
-			StatusBox,
-			ChildList
+			StatusBox
 		},
 		methods: {
 			setQuery(task) {
@@ -62,19 +52,9 @@
 				this.$store.dispatch('tasks/archiveTaskAction', task);
 				this.$store.dispatch('task/archiveTaskAction', task);
 			},
-			toggleChildren(task) {
-				if (task.show_children) {
-					this.$store.commit('tasks/closeChildren', task);
-				} else {
-					this.$store.commit('tasks/showChildren', task);
-				}
-			},
 			openStatusBox(task) {
 				this.$store.commit('tasks/openStatusBox', task);
 			}
-		},
-		created() {
-			this.$store.dispatch('tasks/getTasksAction', this.$route.params.id);
-		},
+		}
 	}
 </script>
