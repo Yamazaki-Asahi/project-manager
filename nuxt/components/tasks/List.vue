@@ -13,16 +13,18 @@
                     <span @click="openStatusBox(task)">{{ statuses[task.status_id].name }}</span>
 					<StatusBox :task="task" />
                 </div>
-				<div class="g-task-add" @click="createNewChild(task)">
+				<div class="g-task-add tooltip"
+					 @click="createNewChild(task)">
 					<i class="fas fa-plus-circle"></i>
 				</div>
-				<div class="g-task-archive" @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
-				<div class="g-task-toggle"
+				<div class="g-task-archive tooltip" @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
+				<div class="g-task-toggle tooltip"
 					 :class="{ active: task.has_children, rotate: task.children.length }"
 					 @click="toggleChildren(task)"><i class="fas fa-chevron-down"></i></div>
 			</div>
 			<List :children="task.children"
-				  v-if="task.children.length" />
+				  v-if="task.children.length"
+			/>
 		</li>
 	</ul>
 </template>

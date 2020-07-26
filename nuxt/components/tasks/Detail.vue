@@ -17,9 +17,7 @@
 						</div>
 						<div class="page-tasks-detail-children">
 							<h2>子タスク</h2>
-							<ul>
-								<li v-for="task in task.children">{{ task.name }}</li>
-							</ul>
+							<List :children="task.children" />
 						</div>
 						<div class="page-tasks-detail-checklist">
 							<h2>チェックリスト</h2>

@@ -58,7 +58,10 @@
 		flex: 1;
 	}
 	&-status {
+		display: flex;
+		align-items: center;
 		position: relative;
+		height: 100%;
 		padding: 0 40px 0 20px;
 		cursor: pointer;
 		span {
@@ -78,8 +81,7 @@
 		position: absolute;
 		z-index: 5;
 		right: 0;
-		bottom: 0;
-		transform: translateY(100%);
+		top: 0;
 		background-color: $color-base;
 		box-shadow: $shadow;
 		padding: 10px;
@@ -102,11 +104,19 @@
 		padding: 0 8px;
 	}
 	&-archive {
+		position: relative;
 		cursor: pointer;
+		&:hover:before {
+			content: 'アーカイブ';
+		}
 	}
 	&-add {
+		position: relative;
 		padding: 0 8px;
 		cursor: pointer;
+		&:hover:before {
+			content: '子タスクを追加';
+		}
 	}
 	&-toggle {
 		position: relative;
@@ -126,22 +136,21 @@
 		}
 		&.active:hover:before {
 			content: '子タスクを表示';
-			display: block;
-			position: absolute;
-			top: 0;
-			left: 50%;
-			transform: translate(-50%, -100%);
-			background-color: rgba(0, 0, 0, .8);
-			border-radius: 4px;
-			width: 100px;
-			padding: 4px 0;
-			text-align: center;
-			font-size: 1rem;
-			color: $color-base;
 		}
 	}
-	&-new-child {
-		margin: 5px 0 0 20px;
+	.tooltip:hover:before {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translate(-50%, -100%);
+		background-color: rgba(0, 0, 0, .8);
+		border-radius: 4px;
+		padding: 4px 10px;
+		white-space: nowrap;
+		text-align: center;
+		font-size: 1rem;
+		color: $color-base;
 	}
 }
 
