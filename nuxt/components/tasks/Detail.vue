@@ -16,6 +16,7 @@
 						</div>
 						<div class="page-tasks-detail-children">
 							<h2>子タスク</h2>
+							<childList :tasks="task.children" />
 						</div>
 						<div class="page-tasks-detail-checklist">
 							<h2>チェックリスト</h2>
@@ -46,6 +47,7 @@
 <script>
 	import ClickOutside from 'vue-click-outside'
 	import List from './List'
+	import ChildList from './ChildList'
 	export default {
 		computed: {
 			task() {
@@ -56,7 +58,8 @@
 			}
 		},
 		components: {
-			List
+			List,
+			ChildList
 		},
 		methods: {
 			closeTask() {

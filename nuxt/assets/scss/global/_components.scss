@@ -69,7 +69,10 @@
 		padding: 0 40px 0 20px;
 		cursor: pointer;
 		span {
+			display: flex;
+			align-items: center;
 			position: relative;
+			height: 100%;
 		}
 		span:after {
 			content: '\f0d7';
