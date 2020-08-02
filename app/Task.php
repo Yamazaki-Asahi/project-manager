@@ -15,12 +15,12 @@ class Task extends Model
 		'status_id' => 'int',
 	];
 
-    public function project()
+	public function project()
 	{
 		return $this->belongsTo('App\Project');
 	}
 
-	public function childTasks()
+	public function children()
 	{
 		return $this->hasMany('App\Task', 'parent_id', 'id');
 	}

@@ -1,8 +1,8 @@
-.g-task-list {
+.gl-task-list {
 	margin: 5px 0 0 20px;
 }
 
-.g-task {
+.gl-task {
 	margin-top: 5px;
 	&:first-child {
 		margin-top: 0;
@@ -161,14 +161,14 @@
 	}
 }
 
-.g-box {
+.gl-box {
 	box-shadow: $shadow;
 	background-color: $color-base;
 	padding: 20px;
 	margin-bottom: 20px;
 }
 
-.g-input {
+.gl-input {
 	border: 1px solid $color-border;
 	margin-bottom: 10px;
 	padding: 0 20px;
@@ -176,7 +176,7 @@
 	line-height: 44px;
 }
 
-.g-overlay {
+.gl-overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -186,7 +186,7 @@
 	z-index: 100
 }
 
-.g-modal {
+.gl-modal {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -230,7 +230,7 @@
 見出し
 ============================== */
 
-.g-heading-section {
+.gl-headinglsection {
 	font-size: 2rem;
 	margin: 0 0 20px 0;
 }

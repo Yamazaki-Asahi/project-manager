@@ -1,24 +1,24 @@
 <template>
 	<ul class="page-tasks-list">
-		<li class="g-task" v-for="task in tasks">
+		<li class="gl-task" v-for="task in tasks">
 			<div :style="{ backgroundColor: statuses[task.status_id].color }">
-				<label class="g-task-checkbox">
+				<label class="gl-task-checkbox">
 					<input type="checkbox">
 					<span></span>
 				</label>
 				<nuxt-link :to="setQuery(task)"
 						   @click.native="openTask(task)"
-						   class="g-task-name">{{ task.name }}</nuxt-link>
-				<div class="g-task-status">
+						   class="gl-task-name">{{ task.name }}</nuxt-link>
+				<div class="gl-task-status">
 					<span @click="openStatusBox(task)">{{ statuses[task.status_id].name }}</span>
 					<StatusBox :task="task" />
 				</div>
-				<div class="g-task-archive tooltip" @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
-				<div class="g-task-add tooltip"
+				<div class="gl-task-archive tooltip" @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
+				<div class="gl-task-add tooltip"
 					 @click="createNewChild(task)">
 					<i class="fas fa-plus-circle"></i>
 				</div>
-				<div class="g-task-toggle tooltip"
+				<div class="gl-task-toggle tooltip"
 					 :class="{ active: task.children.length, rotate: task.show_children }"
 					 @click="toggleChildren(task)"><i class="fas fa-chevron-down"></i></div>
 			</div>

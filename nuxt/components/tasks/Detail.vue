@@ -1,8 +1,8 @@
 <template>
 	<div class="page-tasks-detail">
-		<div class="g-overlay">
-			<div class="g-modal" v-click-outside="closeTask">
-				<span class="g-modal-close-btn" @click="closeTask"></span>
+		<div class="gl-overlay">
+			<div class="gl-modal" v-click-outside="closeTask">
+				<span class="gl-modal-close-btn" @click="closeTask"></span>
 				<div class="page-tasks-detail-ttl">
 					<input v-model="task.name" class="siimple-input siimple-input--fluid">
 				</div>

@@ -1,9 +1,6 @@
 import axios from "axios";
 
 export const state = () => ({
-	newTask: {
-		name: ''
-	},
 	list: []
 });
 
@@ -14,7 +11,6 @@ export const mutations = {
 	registerNewTask(state, task) {
 		let newTask = setTemporaryStatus(task);
 		state.list.push(newTask);
-		state.newTask.name = '';
 	},
 	getTasks(state, tasks) {
 		tasks.forEach(function (task) {
@@ -109,7 +105,6 @@ export const actions = {
 		let params = new URLSearchParams();
 		params.append('name', payload.name);
 		params.append('project_id', payload.project_id);
-		params.append('parent_id', payload.parent_id);
 		await axios.post('/api/tasks/', params).then((res) => {
 			data = res.data;
 		}).catch(e => {
@@ -124,6 +119,7 @@ export const actions = {
 		await axios.put('/api/tasks/' + payload.task.id, params)
 			.then((res) => {
 				data = res.data;
+				console.log(data);
 			});
 		context.commit('updateTask', data);
 	},

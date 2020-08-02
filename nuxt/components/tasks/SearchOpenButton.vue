@@ -1,5 +1,5 @@
 <template>
-	<div class="page-tasks-open-wrap g-right">
+	<div class="page-tasks-open-wrap gl-right">
 		<a class="siimple-btn siimple-btn--primary" @click="openSearchBox">条件を絞り込む</a>
 	</div>
 </template>
