@@ -1,35 +1,47 @@
 <template>
-	<ul class="page-tasks-list">
-		<li class="gl-task" v-for="task in tasks">
-			<div :style="{ backgroundColor: statuses[task.status_id].color }">
-				<label class="gl-task-checkbox">
-					<input type="checkbox">
-					<span></span>
-				</label>
-				<nuxt-link :to="setQuery(task)"
-						   @click.native="openTask(task)"
-						   class="gl-task-name">{{ task.name }}</nuxt-link>
-				<div class="gl-task-status">
+	<table class="gl-task-table">
+		<template v-for="task in tasks">
+			<tr class="gl-task" :style="{ backgroundColor: statuses[task.status_id].color }">
+				<td class="gl-task-checkbox">
+					<label>
+						<input type="checkbox">
+						<span></span>
+					</label>
+				</td>
+				<td class="gl-task-name">
+					<nuxt-link :to="setQuery(task)" @click.native="openTask(task)">{{ task.name }}</nuxt-link>
+				</td>
+				<td class="gl-task-status">
 					<span @click="openStatusBox(task)">{{ statuses[task.status_id].name }}</span>
 					<StatusBox :task="task" />
-				</div>
-				<div class="gl-task-archive tooltip" @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
-				<div class="gl-task-add tooltip"
-					 @click="createNewChild(task)">
-					<i class="fas fa-plus-circle"></i>
-				</div>
-				<div class="gl-task-toggle tooltip"
-					 :class="{ active: task.children.length, rotate: task.show_children }"
-					 @click="toggleChildren(task)"><i class="fas fa-chevron-down"></i></div>
-			</div>
-			<ChildList v-if="task.show_children" :tasks="task.children" />
-		</li>
-	</ul>
+				</td>
+				<td class="gl-task-archive tooltip">
+					<div @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
+				</td>
+				<td class="gl-task-add tooltip">
+					<div @click="createNewChild(task)">
+						<i class="fas fa-plus-circle"></i>
+					</div>
+				</td>
+				<td class="gl-task-toggle tooltip" :class="{ active: task.children.length, rotate: task.show_children }">
+					<div @click="toggleChildren(task)">
+						<i class="fas fa-chevron-down"></i>
+					</div>
+				</td>
+			</tr>
+			<template v-if="task.show_children">
+				<ChildTask v-for="task in task.children"
+						   :task="task"
+						   Importedfrom="list"
+						   :style="{ backgroundColor: statuses[task.status_id].color }"/>
+			</template>
+		</template>
+	</table>
 </template>
 
 <script>
 	import StatusBox from "./StatusBox";
-	import ChildList from "./ChildList";
+	import ChildTask from "./ChildTask";
 
 	export default {
 		name: 'List',
@@ -42,8 +54,8 @@
 			}
 		},
 		components: {
+			ChildTask,
 			StatusBox,
-			ChildList
 		},
 		methods: {
 			setQuery(task) {

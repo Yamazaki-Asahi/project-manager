@@ -16,7 +16,10 @@
 						</div>
 						<div class="page-tasks-detail-children">
 							<h2>子タスク</h2>
-							<childList :tasks="task.children" />
+							<ChildTask v-for="task in task.children"
+									   :task="task"
+									   importedfrom="detail"
+									   :style="{ backgroundColor: statuses[task.status_id].color }"/>
 						</div>
 						<div class="page-tasks-detail-checklist">
 							<h2>チェックリスト</h2>
@@ -47,7 +50,7 @@
 <script>
 	import ClickOutside from 'vue-click-outside'
 	import List from './List'
-	import ChildList from './ChildList'
+	import ChildTask from './ChildTask'
 	export default {
 		computed: {
 			task() {
@@ -59,7 +62,7 @@
 		},
 		components: {
 			List,
-			ChildList
+			ChildTask
 		},
 		methods: {
 			closeTask() {

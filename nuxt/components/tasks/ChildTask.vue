@@ -1,23 +1,26 @@
 <template>
-	<ul class="page-tasks-list gl-task-list">
-		<li class="gl-task gl-task-child" v-for="task in tasks">
-			<div :style="{ backgroundColor: statuses[task.status_id].color }">
-				<label class="gl-task-checkbox">
-					<input type="checkbox">
-					<span></span>
-				</label>
-				<nuxt-link :to="setQuery(task)"
-						   @click.native="openTask(task)"
-						   class="gl-task-name">{{ task.name }}</nuxt-link>
-				<div class="gl-task-status">
-					<span @click="openStatusBox(task)">{{ statuses[task.status_id].name }}</span>
-					<StatusBox :task="task" />
-				</div>
-				<div class="gl-task-archive tooltip" @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
-				<div class="gl-task-empty"></div>
+	<tr class="gl-task child">
+		<td class="gl-task-checkbox">
+			<label>
+				<input type="checkbox">
+				<span></span>
+			</label>
+		</td>
+		<td class="gl-task-name">
+			<nuxt-link :to="setQuery(task)" @click.native="openTask(task)">{{ task.name }}</nuxt-link>
+		</td>
+		<td class="gl-task-status">
+			<div>
+				<span @click="openStatusBox(task)">{{ statuses[task.status_id].name }}</span>
+				<StatusBox :task="task" />
 			</div>
-		</li>
-	</ul>
+		</td>
+		<td class="gl-task-archive tooltip">
+			<div @click="archiveTask(task)"><i class="fas fa-trash-alt"></i></div>
+		</td>
+		<td v-if="Importedfrom === 'list'"></td>
+		<td v-if="Importedfrom === 'list'"></td>
+	</tr>
 </template>
 
 <script>
@@ -25,7 +28,8 @@
 
 	export default {
 		props: [
-			'tasks'
+			'task',
+			'Importedfrom'
 		],
 		computed: {
 			statuses() {

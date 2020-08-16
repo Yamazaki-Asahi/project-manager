@@ -1,26 +1,28 @@
-.gl-task-list {
-	margin: 5px 0 0 20px;
-}
-
 .gl-task {
-	margin-top: 5px;
-	&:first-child {
-		margin-top: 0;
+	box-shadow: $shadow;
+	border-radius: 8px;
+	&.child {
+		margin-top: 5px;
 	}
-	> div {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+	&-table {
+		border-collapse: separate;
+		border-spacing: 0 5px;
+		width: 100%;
+	}
+	td {
+		vertical-align: middle;
+		width: 1px;
 		height: 40px;
 		font-size: 1.4rem;
-		box-shadow: $shadow;
-		padding: 0 20px;
-		border-radius: 4px;
+		padding: 0 16px;
+		white-space: nowrap;
 		&:last-child {
 			margin-bottom: 0;
 		}
 	}
 	a {
+		display: flex;
+		align-items: center;
 		height: 100%;
 		color: #666666;
 	}
@@ -57,13 +59,9 @@
 		padding: 0 10px 0 0;
 	}
 	&-name {
-		display: flex;
-		align-items: center;
-		flex: 1;
+		width: 100%!important;
 	}
 	&-status {
-		display: flex;
-		align-items: center;
 		position: relative;
 		height: 100%;
 		padding: 0 40px 0 20px;
@@ -158,9 +156,6 @@
 		text-align: center;
 		font-size: 1rem;
 		color: $color-base;
-	}
-	&-empty {
-		flex: 1;
 	}
 }
 
