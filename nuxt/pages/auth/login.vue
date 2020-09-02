@@ -2,7 +2,7 @@
 	<div class="page-login">
 		<h2>ログイン</h2>
 		<form class="siimple-form" @submit="login($event, email, password)">
-			<div class="g-box">
+			<div class="gl-box">
 				<div class="siimple-form-detail" v-if="message">{{ message }}</div>
 				<div class="siimple-form-field">
 					<div class="siimple-form-field-label">Emailアドレス</div>

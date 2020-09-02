@@ -4,14 +4,13 @@
         <SearchOpenButton v-if="!search.show"/>
         <form @submit="registerNewTask">
             <input type="text"
-                   class="g-input siimple-input siimple-input--fluid"
-                   v-model="newTaskName"
+                   class="gl-input siimple-input siimple-input--fluid"
+                   v-model="newTask.name"
                    placeholder="＋ 新しいタスクを追加">
         </form>
-        <List type="list" />
+        <List />
         <Detail v-if="task.open" />
     </div>
-
 </template>
 
 <script>
@@ -21,6 +20,13 @@
 	import Detail from '~/components/tasks/Detail'
 
 	export default {
+		data: function() {
+			return  {
+				newTask: {
+					name: ''
+				}
+			}
+		},
 		components: {
 			Search,
 			SearchOpenButton,
@@ -29,14 +35,6 @@
 		},
 		middleware: 'authenticated',
 		computed: {
-			newTaskName: {
-				get() {
-					return this.$store.state.tasks.newTask.name
-				},
-				set(v) {
-					this.$store.commit('tasks/inputName', v)
-				}
-			},
 			statuses() {
 				return this.$store.state.statuses.list
 			},
@@ -51,10 +49,11 @@
 			registerNewTask(e) {
 				e.preventDefault();
 				let params = {
-				    name: this.newTaskName,
+				    name: this.newTask.name,
                     project_id: this.$route.params.id,
                 };
 				this.$store.dispatch('tasks/registerNewTaskAction', params);
+				this.newTask.name = '';
 			}
 		},
 		created() {

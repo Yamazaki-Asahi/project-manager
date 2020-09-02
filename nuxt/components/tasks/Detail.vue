@@ -1,8 +1,8 @@
 <template>
 	<div class="page-tasks-detail">
-		<div class="g-overlay">
-			<div class="g-modal" v-click-outside="closeTask">
-				<span class="g-modal-close-btn" @click="closeTask"></span>
+		<div class="gl-overlay">
+			<div class="gl-modal" v-click-outside="closeTask">
+				<span class="gl-modal-close-btn" @click="closeTask"></span>
 				<div class="page-tasks-detail-ttl">
 					<input v-model="task.name" class="siimple-input siimple-input--fluid">
 				</div>
@@ -16,13 +16,13 @@
 						</div>
 						<div class="page-tasks-detail-children">
 							<h2>子タスク</h2>
-							<List type="detail" :children="task.children" />
+							<ChildTask v-for="task in task.children"
+									   :task="task"
+									   importedfrom="detail"
+									   :style="{ backgroundColor: statuses[task.status_id].color }"/>
 						</div>
 						<div class="page-tasks-detail-checklist">
 							<h2>チェックリスト</h2>
-							<ul>
-
-							</ul>
 						</div>
 						<div class="page-tasks-detail-comment">
 							<h2>コメント</h2>
@@ -50,6 +50,7 @@
 <script>
 	import ClickOutside from 'vue-click-outside'
 	import List from './List'
+	import ChildTask from './ChildTask'
 	export default {
 		computed: {
 			task() {
@@ -60,7 +61,8 @@
 			}
 		},
 		components: {
-			List
+			List,
+			ChildTask
 		},
 		methods: {
 			closeTask() {

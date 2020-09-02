@@ -1,5 +1,5 @@
 <template>
-	<div class="page-tasks-search g-box">
+	<div class="page-tasks-search gl-box">
 		<h2 style="">検索条件</h2>
 		<div class="page-tasks-search-contents">
 			<div class="page-tasks-search-status">

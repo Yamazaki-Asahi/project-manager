@@ -2,7 +2,7 @@
 	<div>
 		<Header />
 		<div class="l-contents col1">
-			<div class="g-inner">
+			<div class="gl-inner">
 				<nuxt />
 			</div>
 		</div>

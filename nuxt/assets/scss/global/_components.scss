@@ -1,22 +1,28 @@
-.g-task {
-	margin-top: 5px;
-	&:first-child {
-		margin-top: 0;
+.gl-task {
+	box-shadow: $shadow;
+	border-radius: 8px;
+	&.child {
+		margin-top: 5px;
 	}
-	> div {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+	&-table {
+		border-collapse: separate;
+		border-spacing: 0 5px;
+		width: 100%;
+	}
+	td {
+		vertical-align: middle;
+		width: 1px;
 		height: 40px;
 		font-size: 1.4rem;
-		box-shadow: $shadow;
-		padding: 0 20px;
-		border-radius: 4px;
+		padding: 0 16px;
+		white-space: nowrap;
 		&:last-child {
 			margin-bottom: 0;
 		}
 	}
 	a {
+		display: flex;
+		align-items: center;
 		height: 100%;
 		color: #666666;
 	}
@@ -53,16 +59,18 @@
 		padding: 0 10px 0 0;
 	}
 	&-name {
-		display: flex;
-		align-items: center;
-		flex: 1;
+		width: 100%!important;
 	}
 	&-status {
 		position: relative;
+		height: 100%;
 		padding: 0 40px 0 20px;
 		cursor: pointer;
 		span {
+			display: flex;
+			align-items: center;
 			position: relative;
+			height: 100%;
 		}
 		span:after {
 			content: '\f0d7';
@@ -78,8 +86,7 @@
 		position: absolute;
 		z-index: 5;
 		right: 0;
-		bottom: 0;
-		transform: translateY(100%);
+		top: 0;
 		background-color: $color-base;
 		box-shadow: $shadow;
 		padding: 10px;
@@ -102,11 +109,19 @@
 		padding: 0 8px;
 	}
 	&-archive {
+		position: relative;
 		cursor: pointer;
+		&:hover:before {
+			content: 'アーカイブ';
+		}
 	}
 	&-add {
+		position: relative;
 		padding: 0 8px;
 		cursor: pointer;
+		&:hover:before {
+			content: '子タスクを追加';
+		}
 	}
 	&-toggle {
 		position: relative;
@@ -126,33 +141,32 @@
 		}
 		&.active:hover:before {
 			content: '子タスクを表示';
-			display: block;
-			position: absolute;
-			top: 0;
-			left: 50%;
-			transform: translate(-50%, -100%);
-			background-color: rgba(0, 0, 0, .8);
-			border-radius: 4px;
-			width: 100px;
-			padding: 4px 0;
-			text-align: center;
-			font-size: 1rem;
-			color: $color-base;
 		}
 	}
-	&-new-child {
-		margin: 5px 0 0 20px;
+	.tooltip:hover:before {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translate(-50%, -100%);
+		background-color: rgba(0, 0, 0, .8);
+		border-radius: 4px;
+		padding: 4px 10px;
+		white-space: nowrap;
+		text-align: center;
+		font-size: 1rem;
+		color: $color-base;
 	}
 }
 
-.g-box {
+.gl-box {
 	box-shadow: $shadow;
 	background-color: $color-base;
 	padding: 20px;
 	margin-bottom: 20px;
 }
 
-.g-input {
+.gl-input {
 	border: 1px solid $color-border;
 	margin-bottom: 10px;
 	padding: 0 20px;
@@ -160,7 +174,7 @@
 	line-height: 44px;
 }
 
-.g-overlay {
+.gl-overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -170,7 +184,7 @@
 	z-index: 100
 }
 
-.g-modal {
+.gl-modal {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -214,7 +228,7 @@
 見出し
 ============================== */
 
-.g-heading-section {
+.gl-headinglsection {
 	font-size: 2rem;
 	margin: 0 0 20px 0;
 }

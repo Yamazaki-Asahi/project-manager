@@ -1,6 +1,6 @@
 <template>
-	<div class="g-task-select" v-if="task.open_status_box">
-		<div class="g-task-select-close" @click="closeStatusBox(task)"><i class="fas fa-times"></i></div>
+	<div class="gl-task-select" v-if="task.open_status_box">
+		<div class="gl-task-select-close" @click="closeStatusBox(task)"><i class="fas fa-times"></i></div>
 		<ul>
 			<li v-for="(status, key) in statuses">
 				<label class="siimple-label">
@@ -20,7 +20,6 @@
 
 <script>
 	export default {
-		name: 'List',
 		computed: {
 			statuses() {
 				return this.$store.state.statuses.list
