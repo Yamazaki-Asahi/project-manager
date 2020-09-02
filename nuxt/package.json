@@ -8,7 +8,8 @@
     "dev": "nuxt-ts",
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
-    "generate": "nuxt-ts generate"
+    "generate": "nuxt-ts generate",
+    "test": "jest"
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^0.4.6",
@@ -21,6 +22,11 @@
     "vue-click-outside": "^1.0.7"
   },
   "devDependencies": {
-    "@nuxt/typescript-build": "^0.6.6"
+    "@nuxt/typescript-build": "^0.6.6",
+    "@vue/test-utils": "^1.0.5",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^26.3.0",
+    "jest": "^26.4.2",
+    "vue-jest": "^3.0.6"
   }
 }
