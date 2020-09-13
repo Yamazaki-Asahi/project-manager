@@ -1,5 +1,6 @@
 <template>
 	<tr class="gl-task child">
+		<td><i class="fas fa-arrow-right"></i></td>
 		<td class="gl-task-checkbox">
 			<label>
 				<input type="checkbox">

@@ -14,7 +14,7 @@
 		width: 1px;
 		height: 40px;
 		font-size: 1.4rem;
-		padding: 0 16px;
+		padding: 0 8px;
 		white-space: nowrap;
 		&:last-child {
 			margin-bottom: 0;
@@ -25,9 +25,6 @@
 		align-items: center;
 		height: 100%;
 		color: #666666;
-	}
-	&-children {
-		margin: 5px 0 0 20px;
 	}
 	&-checkbox {
 		position: relative;
@@ -61,7 +58,7 @@
 	&-name {
 		width: 100%!important;
 	}
-	&-status {
+	& &-status {
 		position: relative;
 		height: 100%;
 		padding: 0 40px 0 20px;
@@ -106,9 +103,6 @@
 		}
 	}
 	&-archive {
-		padding: 0 8px;
-	}
-	&-archive {
 		position: relative;
 		cursor: pointer;
 		&:hover:before {
@@ -134,7 +128,7 @@
 			color: transparent;
 		}
 		&.active i {
-			color: $color-text;
+			color: $color-icon;
 		}
 		&.rotate i {
 			transform: rotate(-180deg);
