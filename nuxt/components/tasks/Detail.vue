@@ -9,37 +9,29 @@
 
 				<div class="page-tasks-detail-inner">
 					<div class="page-tasks-detail-main">
-						<div class="page-tasks-detail-desc">
-							<h2>概要</h2>
-							<textarea v-model="task.supplement"
-									  class="siimple-textarea siimple-textarea--fluid">{{ task.supplement }}</textarea>
+						<h2>概要</h2>
+<!--						<textarea v-model="task.supplement"-->
+<!--								  class="siimple-textarea siimple-textarea&#45;&#45;fluid">{{ task.supplement }}</textarea>-->
+<!--						<p>{{ task.supplement }}</p>-->
+						<div class="page-tasks-detail-supplement">
+							<p>ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト<br>
+								ダミーテキスト</p>
 						</div>
-						<div class="page-tasks-detail-children">
-							<h2>子タスク</h2>
-							<ChildTask v-for="task in task.children"
-									   :task="task"
-									   importedfrom="detail"
-									   :style="{ backgroundColor: statuses[task.status_id].color }"/>
-						</div>
-						<div class="page-tasks-detail-checklist">
-							<h2>チェックリスト</h2>
-						</div>
-						<div class="page-tasks-detail-comment">
-							<h2>コメント</h2>
-							<ul class="page-tasks-detail-comment-list">
-								<li v-for="comment in task.comments">{{ comment }}</li>
-							</ul>
-						</div>
+						<h2>子タスク</h2>
+						<ChildTask v-for="task in task.children"
+								   :task="task"
+								   importedfrom="detail"
+								   :style="{ backgroundColor: statuses[task.status_id].color }"/>
+						<h2>チェックポイント</h2>
+						<CheckList/>
+						<h2 id="comment">コメント</h2>
+						<CommentList/>
 					</div>
 
 					<aside class="page-tasks-detail-side">
-						<div class="page-tasks-detail-member">
-							<h3>メンバー</h3>
-						</div>
-						<div class="page-tasks-detail-status">
-							<h3>ステータス</h3>
-							<p :style="{ backgroundColor: statuses[task.status_id].color }">{{ statuses[task.status_id].name }}</p>
-						</div>
+						<h3>メンバー</h3>
+						<h3>ステータス</h3>
+						<p :style="{ backgroundColor: statuses[task.status_id].color }">{{ statuses[task.status_id].name }}</p>
 					</aside>
 				</div>
 			</div>
@@ -51,6 +43,8 @@
 	import ClickOutside from 'vue-click-outside'
 	import List from './List'
 	import ChildTask from './ChildTask'
+	import CommentList from './CommentList'
+	import CheckList from './CheckList'
 	export default {
 		computed: {
 			task() {
@@ -62,7 +56,9 @@
 		},
 		components: {
 			List,
-			ChildTask
+			ChildTask,
+			CommentList,
+			CheckList
 		},
 		methods: {
 			closeTask() {

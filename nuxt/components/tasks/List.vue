@@ -3,7 +3,7 @@
 		<template v-for="task in tasks">
 			<tr class="gl-task" :style="{ backgroundColor: statuses[task.status_id].color }">
 				<td class="gl-task-checkbox" colspan="2">
-					<label>
+					<label class="gl-checkbox">
 						<input type="checkbox">
 						<span></span>
 					</label>

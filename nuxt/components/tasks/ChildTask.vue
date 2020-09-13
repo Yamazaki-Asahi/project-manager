@@ -2,7 +2,7 @@
 	<tr class="gl-task child">
 		<td><i class="fas fa-arrow-right"></i></td>
 		<td class="gl-task-checkbox">
-			<label>
+			<label class="gl-checkbox">
 				<input type="checkbox">
 				<span></span>
 			</label>
