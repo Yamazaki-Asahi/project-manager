@@ -120,7 +120,6 @@ export const actions = {
 		await axios.put('/api/tasks/' + payload.task.id, params)
 			.then((res) => {
 				data = res.data;
-				console.log(data);
 			});
 		context.commit('updateTask', data);
 	},

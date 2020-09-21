@@ -89,16 +89,21 @@
 }
 
 .page-tasks-detail {
+	h1 {
+		font-size: 2.4rem;
+	}
 	h2 {
 		margin: 30px 0 10px;
 		border-left: 4px solid $color-icon;
 		padding-left: 10px;
 		line-height: 1.2em;
+		font-size: 1.8rem;
 		&:first-child {
 			margin-top: 0;
 		}
 	}
 	h3 {
+		margin: 20px 0 10px;
 		font-size: 1.4rem;
 	}
 	&-inner {
@@ -107,10 +112,10 @@
 		margin-top: 30px;
 	}
 	&-main {
-		width: calc(100% - 140px);
+		width: calc(100% - 200px);
 	}
 	&-side {
-		width: 120px;
+		width: 180px;
 	}
 	&-children {
 	}
@@ -137,6 +142,17 @@
 			padding: 0 0 10px;
 			&:nth-child(n+2) {
 				padding-top: 10px;
+			}
+		}
+		.add {
+			display: flex;
+			align-items: flex-end;
+			margin: 20px 0 0;
+			textarea {
+				width: calc(100% - 64px);
+			}
+			input[type="submit"] {
+				margin: 0 0 0 10px;
 			}
 		}
 		.user {

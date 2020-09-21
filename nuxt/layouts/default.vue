@@ -8,6 +8,7 @@
                     <li><a href="/projects/1/files">アクティビティ</a></li>
                     <li><a href="/projects/1/setting">プロジェクト設定</a></li>
                 </ul>
+				<div class="l-side-advertisement">広告</div>
             </div>
             <main class="l-main">
                 <nuxt/>

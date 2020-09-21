@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 export const state = () => ({
-	open: false
+	open: false,
+	isNameEditing: false
 });
 
 export const mutations = {
@@ -18,8 +19,25 @@ export const mutations = {
 		state.open = true;
 	},
 	closeTask(state) {
-		state.open = false
-	}
+		state.open = false;
+	},
+	editName(state) {
+		state.isNameEditing = true;
+	},
+	finishEditName(state) {
+		state.isNameEditing = false;
+	},
+	updateTask(state, task) {
+		task.children = task.children.map(function (child) {
+			child.newChild = false;
+			child.openStatusBox = false;
+			child.children = [];
+			return child;
+		});
+		Object.keys(task).forEach((key) => {
+			state[key] = task[key];
+		});
+	},
 };
 
 export const actions = {
@@ -31,4 +49,17 @@ export const actions = {
 			});
 		context.commit('openTask', data);
 	},
+	async updateTaskAction(context, payload) {
+		let params = new URLSearchParams();
+		params.append(payload.key, payload.value);
+		let data = {};
+		await axios.put('/api/tasks/' + this.state.task.id, params)
+			.then((res) => {
+				data = res.data;
+			});
+		context.commit('updateTask', data);
+		if (payload.key === 'name') {
+			context.commit('finishEditName');
+		}
+	}
 };

@@ -1,39 +1,48 @@
 <template>
 	<div class="page-tasks-detail">
-		<div class="gl-overlay">
-			<div class="gl-modal" v-click-outside="closeTask">
-				<span class="gl-modal-close-btn" @click="closeTask"></span>
-				<div class="page-tasks-detail-ttl">
-					<input v-model="task.name" class="siimple-input siimple-input--fluid">
-				</div>
+		<div class="gl-overlay" @click="closeTask"></div>
+		<div class="gl-modal">
+			<div class="gl-modal-close-btn" @click="closeTask"></div>
 
-				<div class="page-tasks-detail-inner">
-					<div class="page-tasks-detail-main">
-						<h2>概要</h2>
-<!--						<textarea v-model="task.supplement"-->
-<!--								  class="siimple-textarea siimple-textarea&#45;&#45;fluid">{{ task.supplement }}</textarea>-->
-<!--						<p>{{ task.supplement }}</p>-->
-						<div class="page-tasks-detail-supplement">
-							<p>ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト<br>
-								ダミーテキスト</p>
-						</div>
-						<h2>子タスク</h2>
+			<div class="page-tasks-detail-ttl">
+				<h1 @click="editName" v-if="!task.isNameEditing">{{ task.name }}</h1>
+				<input @blur="updateName" :value="task.name" v-if="task.isNameEditing" class="siimple-input siimple-input--fluid">
+			</div>
+
+			<div class="page-tasks-detail-inner">
+				<div class="page-tasks-detail-main">
+					<h2>概要</h2>
+					<!--						<textarea v-model="task.supplement"-->
+					<!--								  class="siimple-textarea siimple-textarea&#45;&#45;fluid">{{ task.supplement }}</textarea>-->
+					<!--						<p>{{ task.supplement }}</p>-->
+					<div class="page-tasks-detail-supplement">
+						<p>ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト<br>
+							ダミーテキスト</p>
+					</div>
+					<h2>子タスク</h2>
+					<table class="gl-task-table">
 						<ChildTask v-for="task in task.children"
 								   :task="task"
 								   importedfrom="detail"
 								   :style="{ backgroundColor: statuses[task.status_id].color }"/>
-						<h2>チェックポイント</h2>
-						<CheckList/>
-						<h2 id="comment">コメント</h2>
+					</table>
+					<h2 id="comment">コメント</h2>
+					<div class="page-tasks-detail-comment">
 						<CommentList/>
+						<div class="add">
+							<textarea type="text" class="siimple-textarea"></textarea>
+							<input type="submit" class="siimple-btn siimple-btn--blue">
+						</div>
 					</div>
-
-					<aside class="page-tasks-detail-side">
-						<h3>メンバー</h3>
-						<h3>ステータス</h3>
-						<p :style="{ backgroundColor: statuses[task.status_id].color }">{{ statuses[task.status_id].name }}</p>
-					</aside>
 				</div>
+
+				<aside class="page-tasks-detail-side">
+					<h3>メンバー</h3>
+					<h3>ステータス</h3>
+					<div class="page-tasks-detail-status">
+						<p :style="{ backgroundColor: statuses[task.status_id].color }">{{ statuses[task.status_id].name }}</p>
+					</div>
+				</aside>
 			</div>
 		</div>
 	</div>
@@ -66,6 +75,15 @@
 				delete query['task_id'];
 				this.$router.push({query: query});
 				this.$store.commit('task/closeTask');
+			},
+			editName() {
+				this.$store.commit('task/editName');
+			},
+			updateName(e) {
+				this.$store.dispatch('task/updateTaskAction', {
+					key: 'name',
+					value: e.target.value,
+				});
 			}
 		},
 		directives: {
