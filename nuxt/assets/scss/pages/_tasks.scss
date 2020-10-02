@@ -120,6 +120,9 @@
 	&-children {
 	}
 	&-supplement {
+		textarea {
+			width: 100%;
+		}
 		p {
 			font-size: 1.4rem;
 		}
@@ -138,7 +141,7 @@
 		.list li {
 			display: flex;
 			align-items: flex-start;
-			border-bottom: 1px solid #cccccc;
+			border-bottom: 1px dashed #cccccc;
 			padding: 0 0 10px;
 			&:nth-child(n+2) {
 				padding-top: 10px;
@@ -188,17 +191,17 @@
 			padding: 10px;
 			margin-bottom: 5px;
 			font-size: 1.4rem;
-			&:before {
-				content: '';
-				display: block;
-				position: absolute;
-				top: 0;
-				left: -20px;
-				border-top: 10px solid #f5f5f5;
-				border-right: 10px solid #f5f5f5;
-				border-bottom: 10px solid transparent;
-				border-left: 10px solid transparent;
-			}
+			//&:before {
+			//	content: '';
+			//	display: block;
+			//	position: absolute;
+			//	top: 0;
+			//	left: -20px;
+			//	border-top: 10px solid #f5f5f5;
+			//	border-right: 10px solid #f5f5f5;
+			//	border-bottom: 10px solid transparent;
+			//	border-left: 10px solid transparent;
+			//}
 		}
 	}
 	&-status {

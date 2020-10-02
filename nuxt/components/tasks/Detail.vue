@@ -12,12 +12,13 @@
 			<div class="page-tasks-detail-inner">
 				<div class="page-tasks-detail-main">
 					<h2>概要</h2>
-					<!--						<textarea v-model="task.supplement"-->
-					<!--								  class="siimple-textarea siimple-textarea&#45;&#45;fluid">{{ task.supplement }}</textarea>-->
-					<!--						<p>{{ task.supplement }}</p>-->
 					<div class="page-tasks-detail-supplement">
-						<p>ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト<br>
-							ダミーテキスト</p>
+						<p v-if="!task.isSupplementEditing"
+						   @click="editSupplement">{{ task.supplement }}</p>
+						<textarea v-if="task.isSupplementEditing"
+								  :value="task.supplement"
+								  class="siimple-textarea"
+								  @blur="updateSupplement"></textarea>
 					</div>
 					<h2>子タスク</h2>
 					<table class="gl-task-table">
@@ -28,7 +29,7 @@
 					</table>
 					<h2 id="comment">コメント</h2>
 					<div class="page-tasks-detail-comment">
-						<CommentList/>
+						<CommentList :comments="task.comments" />
 						<div class="add">
 							<textarea type="text" class="siimple-textarea"></textarea>
 							<input type="submit" class="siimple-btn siimple-btn--blue">
@@ -82,6 +83,15 @@
 			updateName(e) {
 				this.$store.dispatch('task/updateTaskAction', {
 					key: 'name',
+					value: e.target.value,
+				});
+			},
+			editSupplement() {
+				this.$store.commit('task/editSupplement');
+			},
+			updateSupplement(e) {
+				this.$store.dispatch('task/updateTaskAction', {
+					key: 'supplement',
 					value: e.target.value,
 				});
 			}

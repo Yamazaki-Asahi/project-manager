@@ -17,7 +17,7 @@ class TasksController extends Controller
     public static function index (Request $request) {
 		$project = Project::find($request->input('project_id'));
 		$parent_id = $request->input('parent_id') ? intval($request->input('parent_id')) : null;
-		$project->isJoinedProject(); // 現在ログインしているユーザーがプロジェクトに参加しているか
+		$project->isJoinedProject();
     	$tasks = Project::where('id', $project->id)
 			->first()
 			->tasks()
@@ -25,6 +25,7 @@ class TasksController extends Controller
 			->get();
     	foreach ($tasks as $task) {
 			$task->children = $task->children()->get();
+			$task->comments = $task->comments()->get();
 		}
     	return $tasks;
 	}
@@ -34,6 +35,7 @@ class TasksController extends Controller
 		$project = $task->project;
 		$project->isJoinedProject();
 		$task->children = $task->children()->get();
+		$task->comments = $task->comments()->get();
 		return $task;
 	}
 

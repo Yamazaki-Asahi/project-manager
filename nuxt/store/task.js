@@ -2,7 +2,8 @@ import axios from 'axios';
 
 export const state = () => ({
 	open: false,
-	isNameEditing: false
+	isNameEditing: false,
+	isSupplementEditing: false,
 });
 
 export const mutations = {
@@ -24,8 +25,14 @@ export const mutations = {
 	editName(state) {
 		state.isNameEditing = true;
 	},
+	editSupplement(state) {
+		state.isSupplementEditing = true;
+	},
 	finishEditName(state) {
-		state.isNameEditing = false;
+		state.isSupplementEditing = false;
+	},
+	finishEditSupplement(state) {
+		state.isSupplementEditing = false;
 	},
 	updateTask(state, task) {
 		task.children = task.children.map(function (child) {
@@ -60,6 +67,8 @@ export const actions = {
 		context.commit('updateTask', data);
 		if (payload.key === 'name') {
 			context.commit('finishEditName');
+		} else if (payload.key === 'supplement') {
+			context.commit('finishEditSupplement');
 		}
-	}
+	},
 };

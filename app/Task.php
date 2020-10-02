@@ -29,4 +29,8 @@ class Task extends Model
 	{
 		return $this->belongsTo('App\Task', 'parent_id', 'id');
 	}
+	public function comments()
+	{
+		return $this->hasMany('App\Comment', 'task_id', 'id');
+	}
 }

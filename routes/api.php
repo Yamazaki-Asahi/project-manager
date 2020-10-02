@@ -22,5 +22,6 @@ Route::name('api.')->group(function () {
 	});
 	Route::resource('/tasks', 'Api\TasksController');
 	Route::resource('/projects', 'Api\ProjectsController');
+	Route::resource('/comments', 'Api\CommentsController');
 	Route::get('/statuses', 'Api\StatusesController@index');
 });
