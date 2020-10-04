@@ -1,22 +1,24 @@
 import axios from 'axios';
+import marked from 'marked'
 
 export const state = () => ({
 	open: false,
 	isNameEditing: false,
 	isSupplementEditing: false,
+	supplementHTML: ''
 });
 
 export const mutations = {
 	openTask(state, task) {
 		task.children = task.children.map(function (child) {
-			child.newChild = false;
 			child.openStatusBox = false;
-			child.children = [];
 			return child;
 		});
 		Object.keys(task).forEach((key) => {
 			state[key] = task[key];
 		});
+		if (!state.supplement) state.isSupplementEditing = true;
+		if (state.supplement) state.supplementHTML = marked(state.supplement);
 		state.open = true;
 	},
 	closeTask(state) {
@@ -29,10 +31,15 @@ export const mutations = {
 		state.isSupplementEditing = true;
 	},
 	finishEditName(state) {
-		state.isSupplementEditing = false;
+		state.isNameEditing = false;
 	},
 	finishEditSupplement(state) {
-		state.isSupplementEditing = false;
+		if (state.supplement) {
+			state.isSupplementEditing = false;
+			state.supplementHTML = marked(state.supplement);
+		} else {
+			state.isSupplementEditing = true;
+		}
 	},
 	updateTask(state, task) {
 		task.children = task.children.map(function (child) {

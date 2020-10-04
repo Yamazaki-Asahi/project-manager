@@ -4,49 +4,57 @@
 		<div class="gl-modal">
 			<div class="gl-modal-close-btn" @click="closeTask"></div>
 
-			<div class="page-tasks-detail-ttl">
-				<h1 @click="editName" v-if="!task.isNameEditing">{{ task.name }}</h1>
-				<input @blur="updateName" :value="task.name" v-if="task.isNameEditing" class="siimple-input siimple-input--fluid">
-			</div>
-
-			<div class="page-tasks-detail-inner">
-				<div class="page-tasks-detail-main">
-					<h2>概要</h2>
-					<div class="page-tasks-detail-supplement">
-						<p v-if="!task.isSupplementEditing"
-						   @click="editSupplement">{{ task.supplement }}</p>
-						<textarea v-if="task.isSupplementEditing"
-								  :value="task.supplement"
-								  class="siimple-textarea"
-								  @blur="updateSupplement"></textarea>
-					</div>
-					<h2>子タスク</h2>
-					<table class="gl-task-table">
-						<ChildTask v-for="task in task.children"
-								   :task="task"
-								   importedfrom="detail"
-								   :style="{ backgroundColor: statuses[task.status_id].color }"/>
-					</table>
-					<h2 id="comment">コメント</h2>
-					<div class="page-tasks-detail-comment">
-						<CommentList :comments="task.comments" />
-						<div class="add">
-							<textarea type="text" class="siimple-textarea"></textarea>
-							<input type="submit" class="siimple-btn siimple-btn--blue">
-						</div>
-					</div>
+			<div class="gl-modal-body">
+				<div class="page-tasks-detail-ttl">
+					<h1 @click="editName" v-if="!task.isNameEditing">{{ task.name }}</h1>
+					<input @blur="updateName"
+						   @keyup.enter="updateName"
+						   :value="task.name"
+						   v-if="task.isNameEditing" class="siimple-input siimple-input--fluid">
 				</div>
 
-				<aside class="page-tasks-detail-side">
-					<h3>メンバー</h3>
-					<h3>ステータス</h3>
-					<div class="page-tasks-detail-status">
-						<p :style="{ backgroundColor: statuses[task.status_id].color }">{{ statuses[task.status_id].name }}</p>
+				<div class="page-tasks-detail-inner">
+					<div class="page-tasks-detail-main">
+						<h2>概要<i class="fas fa-edit" :class="{'is-editing': task.isSupplementEditing}" @click="editSupplement"></i></h2>
+						<div class="page-tasks-detail-supplement">
+							<div v-if="!task.isSupplementEditing"
+								 v-html="task.supplementHTML"></div>
+							<textarea v-if="task.isSupplementEditing"
+									  :value="task.supplement"
+									  class="siimple-textarea"
+									  @blur="updateSupplement"></textarea>
+						</div>
+						<h2>子タスク</h2>
+						<table class="gl-task-table">
+							<ChildTask v-for="task in task.children"
+									   :task="task"
+									   importedfrom="detail"
+									   :style="{ backgroundColor: statuses[task.status_id].color }"/>
+						</table>
+						<h2 id="comment">コメント</h2>
+						<div class="page-tasks-detail-comment">
+							<CommentList :comments="task.comments" />
+							<div class="add">
+								<textarea type="text" class="siimple-textarea"></textarea>
+								<input type="submit" class="siimple-btn siimple-btn--blue">
+							</div>
+						</div>
 					</div>
-				</aside>
-			</div>
-		</div>
-	</div>
+
+					<aside class="page-tasks-detail-side">
+						<h3>メンバー</h3>
+						<div class="page-tasks-detail-member">
+							山崎
+						</div>
+						<h3>ステータス</h3>
+						<div class="page-tasks-detail-status">
+							<span :style="{ backgroundColor: statuses[task.status_id].color }">{{ statuses[task.status_id].name }}</span>
+						</div>
+					</aside>
+				</div>
+			</div><!-- .gl-modal-body -->
+		</div><!-- .gl-modal -->
+	</div><!-- .page-tasks-detail -->
 </template>
 
 <script>
