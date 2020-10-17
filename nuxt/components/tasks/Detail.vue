@@ -24,13 +24,6 @@
 									  class="siimple-textarea"
 									  @blur="updateSupplement"></textarea>
 						</div>
-						<h2>子タスク</h2>
-						<table class="gl-task-table">
-							<ChildTask v-for="task in task.children"
-									   :task="task"
-									   importedfrom="detail"
-									   :style="{ backgroundColor: statuses[task.status_id].color }"/>
-						</table>
 						<h2 id="comment">コメント</h2>
 						<div class="page-tasks-detail-comment">
 							<CommentList :comments="task.comments" />
@@ -43,9 +36,7 @@
 
 					<aside class="page-tasks-detail-side">
 						<h3>メンバー</h3>
-						<div class="page-tasks-detail-member">
-							山崎
-						</div>
+						<div class="page-tasks-detail-member">山崎</div>
 						<h3>ステータス</h3>
 						<div class="page-tasks-detail-status">
 							<span :style="{ backgroundColor: statuses[task.status_id].color }">{{ statuses[task.status_id].name }}</span>
@@ -60,7 +51,6 @@
 <script>
 	import ClickOutside from 'vue-click-outside'
 	import List from './List'
-	import ChildTask from './ChildTask'
 	import CommentList from './CommentList'
 	import CheckList from './CheckList'
 	export default {
@@ -74,7 +64,6 @@
 		},
 		components: {
 			List,
-			ChildTask,
 			CommentList,
 			CheckList
 		},

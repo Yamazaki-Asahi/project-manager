@@ -24,7 +24,6 @@ class TasksController extends Controller
 			->where('parent_id', $parent_id)
 			->get();
     	foreach ($tasks as $task) {
-			$task->children = $task->children()->get();
 			$task->comments = $task->comments()->get();
 		}
     	return $tasks;
@@ -34,7 +33,6 @@ class TasksController extends Controller
 		$task = Task::find($id);
 		$project = $task->project;
 		$project->isJoinedProject();
-		$task->children = $task->children()->get();
 		$task->comments = $task->comments()->get();
 		return $task;
 	}
@@ -56,7 +54,6 @@ class TasksController extends Controller
 					->count() + 1;
 		}
 		$task->save();
-		$task->children = $task->children()->get();
 		return $task;
 	}
 
@@ -66,7 +63,6 @@ class TasksController extends Controller
 		if ($project->isJoinedProject()) {
 			$task->fill($request->all());
 			$task->update();
-			$task->children = $task->children()->get();
             return $task;
 		}
 	}

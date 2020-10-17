@@ -5,9 +5,6 @@ export const state = () => ({
 });
 
 export const mutations = {
-	inputName(state, payload) {
-		state.newTask.name = payload;
-	},
 	registerNewTask(state, task) {
 		let newTask = setTemporaryStatus(task);
 		state.list.push(newTask);
@@ -18,36 +15,6 @@ export const mutations = {
 			state.list.push(_task);
 		});
 		console.log(tasks);
-	},
-	showChildren(state, task) {
-		let copiedList = JSON.parse(JSON.stringify(state.list));
-		let newTaskList = copiedList.map(function (item) {
-			if (item.id === task.id) {
-				item.show_children  = true;
-				item.children = task.children.map(function (child) {
-					return setTemporaryStatus(child);
-				});
-			}
-			return item;
-		});
-		state.list = copiedList;
-	},
-	closeChildren(state, task) {
-		let copiedList = JSON.parse(JSON.stringify(state.list));
-		let newTaskList = copiedList.map(function (item) {
-			if (item.id === task.id) {
-				item.show_children  = false;
-			}
-			return item;
-		});
-		state.list = copiedList;
-	},
-	createNewChild(state, parent) {
-		state.list.forEach(function (item, i) {
-			if (item.id === parent.id) {
-				state.list[i].new_child = '';
-			}
-		});
 	},
 	openStatusBox(state, task) {
 		let copiedList = JSON.parse(JSON.stringify(state.list));
@@ -137,8 +104,6 @@ export const actions = {
 
 //　データベースに保持しない一時的なステートをセットする関数
 function setTemporaryStatus(task) {
-	task.new_child = false;
 	task.open_status_box = false;
-	task.show_children = false;
 	return task;
 }

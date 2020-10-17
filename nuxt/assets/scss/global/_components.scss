@@ -14,7 +14,7 @@
 		width: 1px;
 		height: 40px;
 		font-size: 1.4rem;
-		padding: 0 8px;
+		padding: 0 12px;
 		white-space: nowrap;
 		&:last-child {
 			margin-bottom: 0;
@@ -84,34 +84,6 @@
 		cursor: pointer;
 		&:hover:before {
 			content: 'アーカイブ';
-		}
-	}
-	&-add {
-		position: relative;
-		padding: 0 8px;
-		cursor: pointer;
-		&:hover:before {
-			content: '子タスクを追加';
-		}
-	}
-	&-toggle {
-		position: relative;
-		padding: 0 8px;
-		line-height: 20px;
-		&.active {
-			cursor: pointer;
-		}
-		i {
-			color: transparent;
-		}
-		&.active i {
-			color: $color-icon;
-		}
-		&.rotate i {
-			transform: rotate(-180deg);
-		}
-		&.active:hover:before {
-			content: '子タスクを表示';
 		}
 	}
 	.tooltip:hover:before {

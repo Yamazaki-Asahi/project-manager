@@ -10,10 +10,6 @@ export const state = () => ({
 
 export const mutations = {
 	openTask(state, task) {
-		task.children = task.children.map(function (child) {
-			child.openStatusBox = false;
-			return child;
-		});
 		Object.keys(task).forEach((key) => {
 			state[key] = task[key];
 		});
@@ -42,12 +38,6 @@ export const mutations = {
 		}
 	},
 	updateTask(state, task) {
-		task.children = task.children.map(function (child) {
-			child.newChild = false;
-			child.openStatusBox = false;
-			child.children = [];
-			return child;
-		});
 		Object.keys(task).forEach((key) => {
 			state[key] = task[key];
 		});
