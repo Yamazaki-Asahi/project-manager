@@ -124,7 +124,7 @@
 		margin-top: 30px;
 	}
 	&-main {
-		width: calc(100% - 270px);
+		width: calc(100% - 250px);
 	}
 	&-side {
 		width: 220px;
@@ -212,9 +212,7 @@
 			justify-content: center;
 			width: 100px;
 			height: 30px;
-			box-shadow: $shadow;
 			text-align: center;
-			border-radius: 100px;
 			font-size: 1.2rem;
 		}
 	}
