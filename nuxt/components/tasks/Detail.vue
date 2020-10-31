@@ -20,7 +20,8 @@
 						<h2>概要<i class="fas fa-edit" :class="{'is-editing': task.isSupplementEditing}" @click="editSupplement"></i></h2>
 						<div class="page-tasks-detail-supplement">
 							<div v-if="!task.isSupplementEditing"
-								 v-html="task.supplementHTML"></div>
+								 v-html="task.supplementHTML"
+								 @click="editSupplement"></div>
 							<textarea v-if="task.isSupplementEditing"
 									  :value="task.supplement"
 									  class="siimple-textarea"
@@ -29,7 +30,7 @@
 						</div>
 						<h2 id="comment">コメント</h2>
 						<div class="page-tasks-detail-comment">
-							<CommentList :comments="task.comments" />
+							<CommentList :comments="task.comments"/>
 							<div class="add">
 								<textarea type="text" class="siimple-textarea"></textarea>
 								<input type="submit" class="siimple-btn siimple-btn--blue">
@@ -56,6 +57,7 @@
 	import List from './List'
 	import CommentList from './CommentList'
 	import CheckList from './CheckList'
+
 	export default {
 		computed: {
 			task() {
@@ -100,8 +102,8 @@
 			ClickOutside
 		},
 		updated() {
-			if(this.task.isNameEditing) this.$refs.nameInput.focus();
-			if(this.task.isSupplementEditing) this.$refs.supplementTextarea.focus();
+			if (this.task.isNameEditing) this.$refs.nameInput.focus();
+			if (this.task.isSupplementEditing) this.$refs.supplementTextarea.focus();
 		}
 	}
 </script>
