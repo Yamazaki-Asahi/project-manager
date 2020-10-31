@@ -10,7 +10,9 @@
 					<input @blur="updateName"
 						   @keyup.enter="updateName"
 						   :value="task.name"
-						   v-if="task.isNameEditing" class="siimple-input siimple-input--fluid">
+						   v-if="task.isNameEditing"
+						   class="siimple-input siimple-input--fluid"
+						   ref="nameInput">
 				</div>
 
 				<div class="page-tasks-detail-inner">
@@ -22,6 +24,7 @@
 							<textarea v-if="task.isSupplementEditing"
 									  :value="task.supplement"
 									  class="siimple-textarea"
+									  ref="supplementTextarea"
 									  @blur="updateSupplement"></textarea>
 						</div>
 						<h2 id="comment">コメント</h2>
@@ -95,6 +98,10 @@
 		},
 		directives: {
 			ClickOutside
+		},
+		updated() {
+			if(this.task.isNameEditing) this.$refs.nameInput.focus();
+			if(this.task.isSupplementEditing) this.$refs.supplementTextarea.focus();
 		}
 	}
 </script>
