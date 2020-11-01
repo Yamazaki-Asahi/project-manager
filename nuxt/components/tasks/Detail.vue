@@ -20,11 +20,9 @@
 						<h2>概要<i class="fas fa-edit" :class="{'is-editing': task.isSupplementEditing}" @click="editSupplement"></i></h2>
 						<div class="page-tasks-detail-supplement">
 							<div v-if="!task.isSupplementEditing"
-								 v-html="task.supplementHTML"
-								 @click="editSupplement"></div>
+								 v-html="task.supplementHTML"></div>
 							<textarea v-if="task.isSupplementEditing"
 									  :value="task.supplement"
-									  class="siimple-textarea"
 									  ref="supplementTextarea"
 									  @blur="updateSupplement"></textarea>
 						</div>
@@ -32,8 +30,8 @@
 						<div class="page-tasks-detail-comment">
 							<CommentList :comments="task.comments"/>
 							<div class="add">
-								<textarea type="text" class="siimple-textarea"></textarea>
-								<input type="submit" class="siimple-btn siimple-btn--blue">
+								<textarea placeholder="新規コメントを追加" ref="newCommentBody"></textarea>
+								<input type="submit" @click="addComment" class="siimple-btn siimple-btn--blue">
 							</div>
 						</div>
 					</div>
@@ -94,7 +92,13 @@
 			updateSupplement(e) {
 				this.$store.dispatch('task/updateTaskAction', {
 					key: 'supplement',
-					value: e.target.value,
+					value: e.target.value
+				});
+			},
+			addComment() {
+				this.$store.dispatch('task/addCommentAction', {
+					key: 'body',
+					value: this.$refs.newCommentBody.value
 				});
 			}
 		},

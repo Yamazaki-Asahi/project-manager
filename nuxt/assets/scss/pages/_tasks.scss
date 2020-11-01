@@ -165,6 +165,10 @@
 			margin: 20px 0 0;
 			textarea {
 				width: calc(100% - 64px);
+				border: 1px solid #ccc;
+				height: 100px;
+				padding: 10px;
+				resize: none;
 			}
 			input[type="submit"] {
 				margin: 0 0 0 10px;

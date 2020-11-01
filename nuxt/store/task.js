@@ -33,6 +33,7 @@ export const mutations = {
 		if (state.supplement) {
 			state.isSupplementEditing = false;
 			state.supplementHTML = marked(state.supplement);
+			state.supplementHTML = state.supplementHTML.replace('disabled', '');
 		} else {
 			state.isSupplementEditing = true;
 		}
@@ -68,4 +69,15 @@ export const actions = {
 			context.commit('finishEditSupplement');
 		}
 	},
+	async addCommentAction(context, payload) {
+		let params = new URLSearchParams();
+		params.append(payload.key, payload.value);
+		params.append('task_id', this.state.task.id);
+		let data = {};
+		await axios.post('/api/comments/', params)
+			.then((res) => {
+				data = res.data;
+			});
+		console.log(data);
+	}
 };
