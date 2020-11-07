@@ -49,7 +49,6 @@
 				};
 			},
 			openTask(task) {
-				this.$store.commit('task/closeTask');
 				this.$store.dispatch('task/openTaskAction', task.id);
 			},
 			archiveTask(task) {

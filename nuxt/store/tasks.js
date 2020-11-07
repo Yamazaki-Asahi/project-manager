@@ -14,7 +14,6 @@ export const mutations = {
 			let _task = setTemporaryStatus(task);
 			state.list.push(_task);
 		});
-		console.log(tasks);
 	},
 	openStatusBox(state, task) {
 		let copiedList = JSON.parse(JSON.stringify(state.list));

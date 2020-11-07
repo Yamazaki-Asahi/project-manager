@@ -5,7 +5,8 @@ export const state = () => ({
 	open: false,
 	isNameEditing: false,
 	isSupplementEditing: false,
-	supplementHTML: ''
+	supplementHTML: '',
+	comments: []
 });
 
 export const mutations = {
@@ -13,7 +14,6 @@ export const mutations = {
 		Object.keys(task).forEach((key) => {
 			state[key] = task[key];
 		});
-		if (!state.supplement) state.isSupplementEditing = true;
 		if (state.supplement) state.supplementHTML = marked(state.supplement);
 		state.open = true;
 	},
@@ -43,6 +43,9 @@ export const mutations = {
 			state[key] = task[key];
 		});
 	},
+	addComment(state, comments) {
+		state.comments = comments
+	}
 };
 
 export const actions = {
@@ -78,6 +81,6 @@ export const actions = {
 			.then((res) => {
 				data = res.data;
 			});
-		console.log(data);
+		context.commit('addComment', data);
 	}
 };
