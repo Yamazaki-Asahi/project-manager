@@ -153,7 +153,7 @@
 		.list li {
 			display: flex;
 			align-items: flex-start;
-			border-bottom: 1px dashed #cccccc;
+			border-bottom: 1px dotted #cccccc;
 			padding: 0 0 10px;
 			&:nth-child(n+2) {
 				padding-top: 10px;
@@ -205,8 +205,19 @@
 			background-color: #f5f5f5;
 			border-radius: 0 4px 4px 4px;
 			padding: 10px;
-			margin-bottom: 5px;
+			margin-bottom: 10px;
 			font-size: 1.4rem;
+		}
+		.bottom {
+			display: flex;
+			justify-content: space-between;
+		}
+		.tools i {
+			font-size: 1.4rem;
+			cursor: pointer;
+			&:nth-child(2) {
+				margin-left: 10px;
+			}
 		}
 	}
 	&-status {

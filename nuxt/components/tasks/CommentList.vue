@@ -9,7 +9,13 @@
 			</div>
 			<div class="body">
 				<p class="message">{{ comment.body }}</p>
-				<time>{{ comment.created_at }}</time>
+				<div class="bottom">
+					<div class="tools">
+						<i v-if="checkIfOwnComment(comment)" class="fa fa-trash-alt"></i>
+						<i v-if="checkIfOwnComment(comment)" class="fas fa-edit"></i>
+					</div>
+					<time>{{ comment.created_at }}</time>
+				</div>
 			</div>
 		</li>
 	</ul>
@@ -19,6 +25,17 @@
 	export default {
 		props: [
 			'comments',
-		]
+		],
+		computed: {
+			user() {
+				return this.$store.state.user
+			},
+		},
+		methods: {
+			checkIfOwnComment(comment) {
+				if (comment.user_id === this.user.id) return true;
+				return false;
+			}
+		}
 	}
 </script>

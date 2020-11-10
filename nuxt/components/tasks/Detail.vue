@@ -28,7 +28,6 @@
 						</div>
 						<h2 id="comment">コメント</h2>
 						<div class="page-tasks-detail-comment">
-							{{ task.comments }}
 							<CommentList :comments="task.comments"/>
 							<div class="add">
 								<textarea placeholder="新規コメントを追加" ref="newCommentBody"></textarea>
