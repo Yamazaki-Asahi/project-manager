@@ -15,7 +15,7 @@ class CommentsController extends Controller
 		$this->middleware('auth:api');
 	}
 
-    public function store(Request $request)
+    public static function store(Request $request)
     {
 		$task = Task::find($request->input('task_id'));
 		$project = $task->project;
@@ -25,18 +25,25 @@ class CommentsController extends Controller
 			$comment->task_id = $task->id;
 			$comment->user_id = Auth::user()->id;
 			$comment->save();
-			$task->comments = $task->comments()->get();
+			$task->comments = $task->comments()->width('user')->get();
 			return $task->comments;
 		}
     }
 
-    public function update(Request $request, $id)
+    public static function update(Request $request, $id)
     {
         //
     }
 
-    public function destroy($id)
+    public static function destroy($id)
     {
-        //
+		$comment = Comment::find($id);
+		$task = $comment->task;
+		if ($comment->isOwnComment()) {
+			$comment->delete();
+			return $task->comments()
+				->with('user')
+				->get();
+		}
     }
 }

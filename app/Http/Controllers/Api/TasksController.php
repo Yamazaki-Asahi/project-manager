@@ -33,7 +33,9 @@ class TasksController extends Controller
 		$task = Task::find($id);
 		$project = $task->project;
 		$project->isJoinedProject();
-		$task->comments = $task->comments()->get();
+		$task->comments = $task->comments()
+			->with('user')
+			->get();
 		return $task;
 	}
 

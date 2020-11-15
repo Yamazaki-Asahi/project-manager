@@ -5,16 +5,16 @@
 				<figure>
 					<img src="https://placehold.jp/150x150.png" alt="">
 				</figure>
-				<span class="name">DUMMY</span>
+				<span class="name">{{ comment.user.name }}</span>
 			</div>
 			<div class="body">
+				<p class="activity">{{ comment.user.name }}さんがコメントしました。<time>{{ comment.created_at }}</time></p>
 				<p class="message">{{ comment.body }}</p>
 				<div class="bottom">
 					<div class="tools">
-						<i v-if="checkIfOwnComment(comment)" class="fa fa-trash-alt"></i>
 						<i v-if="checkIfOwnComment(comment)" class="fas fa-edit"></i>
+						<i v-if="checkIfOwnComment(comment)" @click="deleteComment(comment)" class="fa fa-trash-alt"></i>
 					</div>
-					<time>{{ comment.created_at }}</time>
 				</div>
 			</div>
 		</li>
@@ -35,6 +35,9 @@
 			checkIfOwnComment(comment) {
 				if (comment.user_id === this.user.id) return true;
 				return false;
+			},
+			deleteComment(comment) {
+				this.$store.dispatch('task/deleteCommentAction', comment);
 			}
 		}
 	}

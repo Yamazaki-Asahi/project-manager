@@ -26,4 +26,7 @@ a {
 
 i {
 	color: $color-icon;
+	&:hover {
+		color: $color-main;
+	}
 }

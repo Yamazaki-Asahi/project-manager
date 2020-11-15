@@ -30,7 +30,7 @@
 						<div class="page-tasks-detail-comment">
 							<CommentList :comments="task.comments"/>
 							<div class="add">
-								<textarea placeholder="新規コメントを追加" ref="newCommentBody"></textarea>
+								<textarea placeholder="新規コメントを追加" ref="newCommentBody" class="siimple-textarea"></textarea>
 								<input type="submit" @click="addComment" class="siimple-btn siimple-btn--blue">
 							</div>
 						</div>

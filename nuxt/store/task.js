@@ -45,6 +45,9 @@ export const mutations = {
 	},
 	addComment(state, comments) {
 		state.comments = comments
+	},
+	deleteComment(state, comments) {
+		state.comments = comments
 	}
 };
 
@@ -82,5 +85,17 @@ export const actions = {
 				data = res.data;
 			});
 		context.commit('addComment', data);
+	},
+	async deleteCommentAction(context, comment) {
+		let c = confirm(`コメントを削除しますか？`);
+		if (!c) return false;
+		let params = new URLSearchParams();
+		params.append('task_id', this.state.task.id);
+		let data = {};
+		await axios.delete('/api/comments/' + comment.id)
+			.then((res) => {
+				data = res.data;
+			});
+		context.commit('deleteComment', data);
 	}
 };

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Comment extends Model
 {
@@ -21,5 +22,13 @@ class Comment extends Model
 	public function task()
 	{
 		return $this->belongsTo('App\Task');
+	}
+
+	public function isOwnComment() {
+		//自分のコメントじゃなかったらエラーをはく
+		if (!$this->user === Auth::user()) {
+			abort(403, '権限がありません');
+		}
+		return true;
 	}
 }
