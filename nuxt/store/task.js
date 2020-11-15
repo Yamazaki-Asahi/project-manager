@@ -15,6 +15,9 @@ export const mutations = {
 			state[key] = task[key];
 		});
 		if (state.supplement) state.supplementHTML = marked(state.supplement);
+		state.comments.forEach(function (comment) {
+			comment.isCommentEditing = false;
+		});
 		state.open = true;
 	},
 	closeTask(state) {
@@ -28,6 +31,16 @@ export const mutations = {
 	},
 	finishEditName(state) {
 		state.isNameEditing = false;
+	},
+	editComment(state, comment) {
+		let comments = state.comments.map(function (comment2) {
+			if (comment2.id === comment.id) {
+				comment2.isCommentEditing = true;
+			}
+			return comment2;
+		});
+		console.log(comments);
+		state.comments = comments;
 	},
 	finishEditSupplement(state) {
 		if (state.supplement) {
@@ -44,6 +57,12 @@ export const mutations = {
 		});
 	},
 	addComment(state, comments) {
+		state.comments = comments
+	},
+	updateComment(state, comments) {
+		comments.forEach(function (comment) {
+			comment.isCommentEditing = false
+		})
 		state.comments = comments
 	},
 	deleteComment(state, comments) {
@@ -85,6 +104,17 @@ export const actions = {
 				data = res.data;
 			});
 		context.commit('addComment', data);
+	},
+	async updateCommentAction(context, payload) {
+		let params = new URLSearchParams();
+		params.append(payload.key, payload.value);
+		params.append('task_id', this.state.task.id);
+		let data = {};
+		await axios.patch('/api/comments/' + payload.comment.id, params)
+			.then((res) => {
+				data = res.data;
+			});
+		context.commit('updateComment', data);
 	},
 	async deleteCommentAction(context, comment) {
 		let c = confirm(`コメントを削除しますか？`);

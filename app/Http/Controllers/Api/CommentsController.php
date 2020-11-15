@@ -25,14 +25,24 @@ class CommentsController extends Controller
 			$comment->task_id = $task->id;
 			$comment->user_id = Auth::user()->id;
 			$comment->save();
-			$task->comments = $task->comments()->width('user')->get();
+			$task->comments = $task->comments()
+				->with('user')
+				->get();
 			return $task->comments;
 		}
     }
 
     public static function update(Request $request, $id)
     {
-        //
+		$comment = Comment::find($id);
+		$task = $comment->task;
+		if ($comment->isOwnComment()) {
+			$comment->fill($request->all());
+			$comment->update();
+			return $task->comments()
+				->with('user')
+				->get();
+		}
     }
 
     public static function destroy($id)

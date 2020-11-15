@@ -172,7 +172,7 @@
 				height: 60px;
 				padding: 10px;
 				resize: none;
-				font-size: 1.2rem;
+				font-size: 1.4rem;
 			}
 			input[type="submit"] {
 				margin: 0 0 0 10px;
@@ -208,6 +208,10 @@
 		.body {
 			flex: 1;
 			margin-left: 20px;
+			textarea {
+				width: 100%;
+				margin-bottom: 10px;
+			}
 		}
 		.message {
 			position: relative;
@@ -224,6 +228,9 @@
 			cursor: pointer;
 			&:nth-child(2) {
 				margin-left: 10px;
+			}
+			&.is-editing {
+				color: $color-main;
 			}
 		}
 	}

@@ -24,6 +24,7 @@
 							<textarea v-if="task.isSupplementEditing"
 									  :value="task.supplement"
 									  ref="supplementTextarea"
+									  class="siimple-textarea"
 									  @blur="updateSupplement"></textarea>
 						</div>
 						<h2 id="comment">コメント</h2>
